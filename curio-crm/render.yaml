@@ -1,0 +1,28 @@
+﻿# Render Blueprint — connect this repo and deploy in one click.
+# Dashboard: New → Blueprint → select repo → set ADMIN_USERNAME + ADMIN_PASSWORD.
+#
+# Persistent disk keeps SQLite (data/wallstreet.db) across redeploys.
+# Starter plan recommended (~$7/mo, always on + disk). Free tier sleeps and has no disk.
+
+services:
+  - type: web
+    name: CurioCRM
+    runtime: node
+    plan: starter
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    startCommand: NODE_ENV=production npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: sqlite-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1

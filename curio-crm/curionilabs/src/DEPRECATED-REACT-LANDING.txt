@@ -1,0 +1,10 @@
+Legacy React landing (Desk CRM / access-code tabs) is retired.
+
+Do NOT run: vite build (old config would build src/App.tsx).
+
+Production gate HTML:
+  C:\Users\torah\Desktop\My_network_App\public\curionilabs.html
+
+Deploy:
+  npm run build  → copies that file to dist/index.html
+  DEPLOY-CURIONILABS-HTTPS.bat

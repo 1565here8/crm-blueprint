@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 120" fill="none" role="img" aria-label="CurioniLabs full logo">
+  <defs>
+    <linearGradient id="mark-bg" x1="8" y1="8" x2="104" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2DD4BF"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="mark-core" x1="36" y1="32" x2="76" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ECFDF5"/>
+      <stop offset="1" stop-color="#A7F3D0"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="104" height="104" rx="22" fill="url(#mark-bg)"/>
+  <path d="M78 34c-17-10-39-2-44 17-4 17 7 35 24 39 14 4 28-1 36-13" stroke="#042F2E" stroke-width="10.5" stroke-linecap="round" fill="none"/>
+  <circle cx="82" cy="41" r="6.5" fill="url(#mark-core)"/>
+  <circle cx="82" cy="41" r="2.8" fill="#042F2E"/>
+  <text x="124" y="58" fill="#FFFFFF" font-family="Segoe UI, system-ui, sans-serif" font-size="34" font-weight="800" letter-spacing="2.4">CURIONILABS</text>
+  <text x="126" y="88" fill="#14B8A6" font-family="Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="5.2">COMMAND</text>
+</svg>

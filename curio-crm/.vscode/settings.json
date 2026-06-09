@@ -1,0 +1,38 @@
+{
+  "//": "cloud-light — synced by npm run cloud:install-all. Heavy work → cursor.com/agents",
+  "typescript.tsserver.maxTsServerMemory": 512,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+  "typescript.tsserver.useSyntaxServer": "always",
+  "typescript.validate.enable": false,
+  "javascript.validate.enable": false,
+  "npm.autoDetect": "off",
+  "npm.enabled": false,
+  "eslint.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {},
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/out/**": true,
+    "**/.next/**": true,
+    "**/.data/**": true,
+    "**/.tools/**": true,
+    "**/agent-tools/**": true,
+    "**/terminals/**": true,
+    "**/coverage/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.tools": true,
+    "**/.data": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/package-lock.json": true
+  },
+  "files.exclude": {
+    "**/.tools": true,
+    "**/.data": true
+  }
+}

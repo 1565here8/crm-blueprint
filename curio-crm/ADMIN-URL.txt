@@ -1,0 +1,37 @@
+﻿CurioCRM ADMIN URL
+===================
+
+Operator console (CRM):
+  https://admin.CurioCRM.com/admin
+
+Login first (same owner account):
+  https://admin.CurioCRM.com/login
+
+Admin API (backend):
+  https://admin.CurioCRM.com/api/admin
+
+Health check:
+  https://admin.CurioCRM.com/api/health
+
+Public website (clients):
+  https://www.CurioCRM.com
+
+
+ONE-TIME — Cloudflare DNS for admin subdomain
+---------------------------------------------
+1. Open https://dash.cloudflare.com → CurioCRM.com → DNS → Records
+2. Add record:
+   Type:   CNAME
+   Name:   admin
+   Target: 80d169a0-ac64-46a7-80d9-94282e2e3129.cfargotunnel.com
+   Proxy:  ON (orange cloud)
+3. Save
+4. Restart GO-LIVE.bat on your PC
+
+
+Default login (.env on your PC):
+  Username: owner
+  Password: change-me-owner-password
+
+Change password:
+  npx tsx scripts/set-admin.ts owner YourNewPassword

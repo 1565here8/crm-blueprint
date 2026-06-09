@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.titan-hero {
+  background: linear-gradient(160deg, #071018 0%, #0c1a2e 45%, #0a1628 100%);
+}
+
+.titan-section-light {
+  background: #f7f9fc;
+  color: #0f172a;
+}
+
+.titan-section-dark {
+  background: #0a1628;
+  color: #f1f5f9;
+}
+
+.titan-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.titan-card:hover {
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px);
+}
+
+.titan-card-dark {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gold-accent {
+  color: #c9a227;
+}
+
+.gold-bg {
+  background: linear-gradient(135deg, #c9a227 0%, #e8c547 100%);
+}
+
+.navy-text {
+  color: #0a1628;
+}
+
+.gradient-headline {
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

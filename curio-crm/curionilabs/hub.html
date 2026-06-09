@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Curioni Labs — the first smart CRM built for brokerages you own. Sovereign desk, treasury, and AI on your infrastructure." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="curioni-api" content="https://admin.curionilabs.com" />
+  <title>Curioni Labs · Broker OS for FX &amp; crypto desks</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23000' width='32' height='32' rx='8'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='%23f5f5f7' font-family='system-ui' font-size='14' font-weight='600'%3EC%3C/text%3E%3C/svg%3E" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+      font-weight: 400;
+      color: #1d1d1f;
+      background: #fbfbfd;
+      line-height: 1.47059;
+      letter-spacing: -0.022em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(251, 251, 253, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      transition: background 0.3s;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 980px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #1d1d1f;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: none;
+      gap: 28px;
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.8;
+    }
+    .nav-links a {
+      color: #1d1d1f;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 0.6; }
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 400;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .nav-cta:hover { text-decoration: underline; }
+    @media (min-width: 768px) {
+      .nav { height: 44px; }
+      .nav-links { display: flex; }
+    }
+
+    /* ── Typography ── */
+    .eyebrow {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #bf4800;
+      margin: 0 0 12px;
+    }
+    .eyebrow-light { color: #f5a623; }
+    h1 {
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0;
+      color: #1d1d1f;
+    }
+    h1.light { color: #f5f5f7; }
+    h2 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.07143;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    h2.light { color: #f5f5f7; }
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.16667;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .lead {
+      font-size: clamp(19px, 2.5vw, 24px);
+      font-weight: 400;
+      line-height: 1.33337;
+      letter-spacing: 0.009em;
+      color: #86868b;
+      margin: 16px 0 0;
+      max-width: 680px;
+    }
+    .lead.light { color: #a1a1a6; }
+    .body-copy {
+      font-size: 17px;
+      line-height: 1.47059;
+      color: #86868b;
+      margin: 0;
+    }
+    .body-copy.light { color: #a1a1a6; }
+
+    /* ── Layout ── */
+    .section {
+      padding: clamp(64px, 10vw, 120px) 22px;
+    }
+    .section-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .section-inner-wide {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .center { text-align: center; }
+    .center .lead { margin-left: auto; margin-right: auto; }
+
+    /* ── Hero ── */
+    .hero {
+      padding-top: clamp(100px, 14vw, 160px);
+      padding-bottom: clamp(64px, 8vw, 100px);
+      text-align: center;
+      background: #fbfbfd;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 980px;
+      background: rgba(0, 0, 0, 0.04);
+      font-size: 12px;
+      font-weight: 500;
+      color: #1d1d1f;
+      margin-bottom: 20px;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #30d158;
+    }
+    .hero-cta-row {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 22px;
+      border-radius: 980px;
+      background: #0066cc;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 400;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #0077ed; }
+    .btn-link {
+      font-size: 17px;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .btn-link:hover { text-decoration: underline; }
+    .hero-visual {
+      margin: 56px auto 0;
+      max-width: 960px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.08);
+      aspect-ratio: 16 / 10;
+      position: relative;
+      background: #0c0e14;
+    }
+    .hero-visual .ui-frame { position: absolute; inset: 0; }
+    .hero-visual .ui-kpis { grid-template-columns: repeat(5, 1fr); }
+    .hero-visual .ui-kpi b { font-size: 11px; }
+
+    /* ── Sovereign strip ── */
+    .sovereign {
+      background: #000;
+      color: #f5f5f7;
+    }
+    .pill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      margin-top: 48px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .pill-card {
+      background: #1d1d1f;
+      padding: 36px 32px;
+    }
+    .pill-card .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+    .pill-card h3 { color: #f5f5f7; font-size: 21px; }
+    .pill-card p { margin: 10px 0 0; font-size: 15px; color: #a1a1a6; line-height: 1.5; }
+
+    /* ── Feature rows (Apple product style) ── */
+    .feature-band {
+      background: #f5f5f7;
+    }
+    .feature-band.alt { background: #fbfbfd; }
+    .feature-row {
+      display: grid;
+      gap: 40px;
+      align-items: center;
+      margin-top: 64px;
+    }
+    @media (min-width: 768px) {
+      .feature-row { grid-template-columns: 1fr 1fr; gap: 64px; }
+      .feature-row.reverse .feature-copy { order: 2; }
+      .feature-row.reverse .feature-visual { order: 1; }
+    }
+    .feature-copy .tag {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0066cc;
+      margin-bottom: 8px;
+    }
+    .feature-copy h3 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .feature-copy p {
+      margin: 16px 0 0;
+      font-size: 17px;
+      color: #86868b;
+      line-height: 1.5;
+    }
+    .feature-list {
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      color: #1d1d1f;
+      padding: 8px 0;
+    }
+    .feature-list li::before {
+      content: "✓";
+      color: #30d158;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .feature-visual {
+      border-radius: 18px;
+      background: #e8e8ed;
+      aspect-ratio: 4 / 3;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+    .feature-visual.dark { background: #12141a; }
+    .feature-visual.ai-panel { aspect-ratio: 1 / 1; }
+
+    /* ── Product UI mockups (screenshot-grade, no empty boxes) ── */
+    .ui-frame {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      font-size: 10px;
+      line-height: 1.35;
+    }
+    .ui-chrome {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 12px;
+      background: #1a1d26;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+    .ui-chrome span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #3a3f4b;
+    }
+    .ui-chrome span:nth-child(1) { background: #ff5f57; }
+    .ui-chrome span:nth-child(2) { background: #febc2e; }
+    .ui-chrome span:nth-child(3) { background: #28c840; }
+    .ui-url {
+      margin-left: 8px;
+      flex: 1;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.35);
+      color: #8b93a7;
+      font-size: 9px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ui-body { flex: 1; overflow: hidden; display: flex; min-height: 0; }
+    .ui-rail {
+      width: 118px;
+      flex-shrink: 0;
+      background: #0c0e14;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px 8px;
+    }
+    .ui-rail-brand {
+      font-size: 9px;
+      font-weight: 700;
+      color: #c4b5fd;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      padding: 0 6px;
+    }
+    .ui-rail-item {
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: #6b7280;
+      margin-bottom: 2px;
+      font-size: 9px;
+    }
+    .ui-rail-item.on {
+      background: rgba(124, 58, 237, 0.2);
+      color: #e9d5ff;
+      font-weight: 600;
+    }
+    .ui-main { flex: 1; padding: 12px; background: #f8f9fc; min-width: 0; }
+    .ui-main.dark-bg { background: #0f1219; }
+    .ui-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .ui-title { font-size: 11px; font-weight: 700; color: #1e293b; letter-spacing: -0.02em; }
+    .ui-main.dark-bg .ui-title { color: #f1f5f9; }
+    .ui-pills { display: flex; gap: 4px; flex-wrap: wrap; }
+    .ui-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 8px;
+      font-weight: 600;
+      background: #e2e8f0;
+      color: #64748b;
+    }
+    .ui-pill.on { background: #7c3aed; color: #fff; }
+    .ui-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .ui-kpi {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    .ui-kpi b {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+    }
+    .ui-kpi em {
+      display: block;
+      font-style: normal;
+      font-size: 8px;
+      color: #64748b;
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .ui-kpi.up b { color: #059669; }
+    .ui-kpi.warn b { color: #d97706; }
+    .ui-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 36px;
+      margin-bottom: 8px;
+      padding: 0 2px;
+    }
+    .ui-bar {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, #8b5cf6, #6d28d9);
+      min-height: 8px;
+    }
+    .ui-table {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .ui-tr {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.7fr;
+      gap: 6px;
+      padding: 6px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 8px;
+      color: #334155;
+    }
+    .ui-tr.head {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .ui-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 7px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .ui-badge.ok { background: #d1fae5; color: #047857; }
+    .ui-badge.pending { background: #fef3c7; color: #b45309; }
+    .ui-badge.live { background: #dbeafe; color: #1d4ed8; }
+    .ui-queue { display: flex; flex-direction: column; gap: 6px; }
+    .ui-queue-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      color: #cbd5e1;
+    }
+    .ui-queue-row strong { color: #f8fafc; font-size: 10px; }
+    .ui-term {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 8px;
+      color: #86efac;
+      background: #0a0f0a;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      line-height: 1.6;
+    }
+    .ui-term .dim { color: #4ade80; opacity: 0.65; }
+    .ui-chat {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 4px 0;
+    }
+    .ui-bubble {
+      max-width: 92%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 9px;
+      line-height: 1.45;
+    }
+    .ui-bubble.ai {
+      align-self: flex-start;
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      color: #e9d5ff;
+    }
+    .ui-bubble.user {
+      align-self: flex-end;
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+    .ui-mini-preview {
+      height: 72px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: #0f1219;
+      position: relative;
+    }
+    .ui-mini-preview.light { background: #f8fafc; }
+
+    /* ── Compare ── */
+    .compare {
+      background: #000;
+      color: #f5f5f7;
+    }
+    .compare-grid {
+      display: grid;
+      gap: 2px;
+      margin-top: 48px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) {
+      .compare-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .compare-col {
+      padding: 36px 32px;
+    }
+    .compare-col.bad { background: #1d1d1f; }
+    .compare-col.good { background: #0a2540; }
+    .compare-col h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .compare-col.bad h3 { color: #ff6b6b; }
+    .compare-col.good h3 { color: #30d158; }
+    .compare-col ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .compare-col li {
+      font-size: 15px;
+      color: #a1a1a6;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .compare-col li:last-child { border-bottom: none; }
+
+    /* ── Stats ribbon ── */
+    .stats-ribbon {
+      background: #f5f5f7;
+      padding: 48px 22px;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+    .stats-grid {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #1d1d1f;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: #86868b;
+      margin-top: 4px;
+    }
+
+    /* ── Access panel ── */
+    .access-section {
+      background: #fbfbfd;
+    }
+    .access-grid {
+      display: grid;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .access-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+    }
+    .access-copy h2 { font-size: clamp(32px, 4vw, 48px); }
+    .access-points {
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .access-points li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: #86868b;
+      padding: 10px 0;
+    }
+    .access-points li svg { flex-shrink: 0; margin-top: 2px; }
+
+    .card {
+      padding: 32px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #86868b;
+      margin-bottom: 16px;
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #d2d2d7;
+      background: #fbfbfd;
+      color: #1d1d1f;
+      font: inherit;
+      font-size: 17px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
+    }
+    .btn-submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 980px;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 400;
+      cursor: pointer;
+      color: #fff;
+      background: #0066cc;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: #0077ed; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
+
+    .msg {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.45;
+    }
+    .msg.err {
+      color: #d70015;
+      background: rgba(215, 0, 21, 0.06);
+      border: 1px solid rgba(215, 0, 21, 0.15);
+    }
+    .msg.ok {
+      color: #248a3d;
+      background: rgba(36, 138, 61, 0.06);
+      border: 1px solid rgba(36, 138, 61, 0.15);
+    }
+
+    .secure-note {
+      margin-top: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: #86868b;
+      line-height: 1.5;
+    }
+    .secure-note svg { flex-shrink: 0; margin-top: 1px; opacity: 0.6; }
+    .field-hint {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #86868b;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #f5f5f7;
+      padding: 20px 22px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: #86868b;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+    }
+    footer strong { color: #1d1d1f; font-weight: 500; }
+
+    /* ── Consent ── */
+    .consent-banner {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 200;
+      padding: 16px 22px 20px;
+      background: rgba(251, 251, 253, 0.95);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.08);
+    }
+    .consent-banner[hidden] { display: none; }
+    .consent-banner p {
+      margin: 0 0 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #86868b;
+      max-width: 680px;
+    }
+    .consent-banner a { color: #0066cc; }
+    .consent-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .consent-actions button {
+      border-radius: 980px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 400;
+      cursor: pointer;
+      border: 1px solid #d2d2d7;
+      background: transparent;
+      color: #1d1d1f;
+    }
+    .consent-actions .btn-accept {
+      background: #0066cc;
+      color: #fff;
+      border: none;
+    }
+
+    /* ── Reveal animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Solutions (Leverate-style) ── */
+    .solutions-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    @media (min-width: 640px) { .solutions-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .solutions-grid { grid-template-columns: repeat(3, 1fr); } }
+    .solution-card {
+      border-radius: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: #fff;
+      padding: 24px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .solution-card:hover {
+      border-color: rgba(0, 102, 204, 0.25);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+    }
+    .solution-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .solution-card p { font-size: 14px; color: #86868b; margin: 0; line-height: 1.5; }
+    .sol-thumb {
+      height: 88px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: #0f1219;
+      position: relative;
+    }
+    .sol-thumb-inner {
+      position: absolute;
+      inset: 0;
+      padding: 10px 12px;
+      font-size: 8px;
+      color: #94a3b8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+    .sol-thumb-bar {
+      height: 5px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    }
+    .sol-thumb-row {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .sol-thumb-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #334155;
+      flex-shrink: 0;
+    }
+    .sol-thumb-dot.on { background: #8b5cf6; }
+    .solution-tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0066cc;
+    }
+    .contact-band {
+      background: linear-gradient(135deg, #1d1d1f 0%, #2d2d35 100%);
+      color: #f5f5f7;
+      border-radius: 24px;
+      padding: clamp(40px, 6vw, 64px) 32px;
+      text-align: center;
+    }
+    .contact-band h2 { color: #f5f5f7; font-size: clamp(28px, 4vw, 40px); }
+    .contact-band p { color: #a1a1a6; max-width: 520px; margin: 12px auto 0; }
+    .contact-band .btn-primary { margin-top: 24px; }
+    .footer-ops { margin-top: 10px; font-size: 11px; opacity: 0.7; }
+    .footer-ops a { color: #86868b; }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Curioni Labs</a>
+      <div class="nav-links">
+        <a href="#platform">Platform</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#intelligence">Intelligence</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="#contact" class="nav-cta">Book a walkthrough</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero section">
+    <div class="section-inner center">
+      <div class="hero-badge reveal"><span class="hero-badge-dot"></span> First-of-its-kind smart brokerage CRM</div>
+      <h1 class="reveal">The CRM your<br />brokerage owns.</h1>
+      <p class="lead reveal">
+        Curioni Labs built Desk CRM — a sovereign back-office where portal, desk, treasury, and AI live on <em>your</em> infrastructure. Not rented tabs. Not someone else's cloud. Yours.
+      </p>
+      <div class="hero-cta-row reveal">
+        <a href="#platform" class="btn-primary">Explore Desk CRM</a>
+        <a href="#contact" class="btn-link">Talk to us →</a>
+      </div>
+
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="ui-frame">
+          <div class="ui-chrome">
+            <span></span><span></span><span></span>
+            <div class="ui-url">admin.yourbrand.com / Mission Control · Live</div>
+          </div>
+          <div class="ui-body">
+            <div class="ui-rail">
+              <div class="ui-rail-brand">Desk CRM</div>
+              <div class="ui-rail-item on">Mission Control</div>
+              <div class="ui-rail-item">Hot Leads <span style="float:right;color:#f59e0b;">12</span></div>
+              <div class="ui-rail-item">Users &amp; KYC</div>
+              <div class="ui-rail-item">Cashier</div>
+              <div class="ui-rail-item">Live Book</div>
+              <div class="ui-rail-item">Partners HQ</div>
+              <div class="ui-rail-item">Wallstreet AI</div>
+            </div>
+            <div class="ui-main dark-bg">
+              <div class="ui-title-row">
+                <div class="ui-title">Mission Control · Friday 09:42 EET</div>
+                <div class="ui-pills">
+                  <span class="ui-pill on">Today</span>
+                  <span class="ui-pill">7d</span>
+                  <span class="ui-pill">30d</span>
+                </div>
+              </div>
+              <div class="ui-kpis">
+                <div class="ui-kpi up"><b>+47</b><em>Registrations</em></div>
+                <div class="ui-kpi up"><b>$284K</b><em>Deposits</em></div>
+                <div class="ui-kpi"><b>1,842</b><em>Open positions</em></div>
+                <div class="ui-kpi warn"><b>8</b><em>Pending KYC</em></div>
+                <div class="ui-kpi"><b>94%</b><em>Agent SLA</em></div>
+              </div>
+              <div class="ui-chart" aria-hidden="true">
+                <div class="ui-bar" style="height:55%;opacity:0.5;"></div>
+                <div class="ui-bar" style="height:72%;opacity:0.6;"></div>
+                <div class="ui-bar" style="height:48%;opacity:0.55;"></div>
+                <div class="ui-bar" style="height:88%;"></div>
+                <div class="ui-bar" style="height:65%;opacity:0.7;"></div>
+                <div class="ui-bar" style="height:92%;"></div>
+                <div class="ui-bar" style="height:78%;opacity:0.85;"></div>
+                <div class="ui-bar" style="height:100%;"></div>
+                <div class="ui-bar" style="height:70%;opacity:0.75;"></div>
+                <div class="ui-bar" style="height:82%;opacity:0.9;"></div>
+                <div class="ui-bar" style="height:58%;opacity:0.6;"></div>
+                <div class="ui-bar" style="height:95%;opacity:0.95;"></div>
+              </div>
+              <div class="ui-table">
+                <div class="ui-tr head"><span>Client</span><span>Agent</span><span>Status</span></div>
+                <div class="ui-tr"><span>M. Al-Rashid · FX</span><span>S. Cohen</span><span><span class="ui-badge ok">Funded</span></span></div>
+                <div class="ui-tr"><span>L. Petrov · Crypto</span><span>A. Demir</span><span><span class="ui-badge pending">KYC</span></span></div>
+                <div class="ui-tr"><span>J. Nakamura · FX</span><span>S. Cohen</span><span><span class="ui-badge live">Trading</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats ribbon -->
+  <div class="stats-ribbon">
+    <div class="stats-grid">
+      <div class="reveal">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Sole ownership of your stack</div>
+      </div>
+      <div class="reveal">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Platform — portal, CRM, treasury, AI</div>
+      </div>
+      <div class="reveal">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Client records on our servers</div>
+      </div>
+      <div class="reveal">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">White-label — your brand, always</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sovereign -->
+  <section id="sovereign" class="sovereign section">
+    <div class="section-inner center">
+      <p class="eyebrow eyebrow-light reveal">Sovereign by design</p>
+      <h2 class="light reveal">Built for principals who<br />refuse rented infrastructure.</h2>
+      <p class="lead light reveal" style="margin-left:auto;margin-right:auto;">
+        Every other CRM rents you a tab inside their cloud. Desk CRM is the first smart brokerage service you install on metal you control — with native AI that never phones home.
+      </p>
+      <div class="pill-grid reveal">
+        <div class="pill-card">
+          <div class="icon">◆</div>
+          <h3>Your VPS. Your rules.</h3>
+          <p>Portal, operator desk, cashier, risk views, and permissions deploy to infrastructure you own. Compliance asks where data lives — you point to your server room.</p>
+        </div>
+        <div class="pill-card">
+          <div class="icon">◎</div>
+          <h3>Your brand. Your clients.</h3>
+          <p>White-label from day one. Your traders never see Curioni Labs. We are the technology partner behind the desk — not a competing brokerage.</p>
+        </div>
+        <div class="pill-card">
+          <div class="icon">⬡</div>
+          <h3>Your AI. Your building.</h3>
+          <p>Wallstreet AI runs on-box via Ollama. Client names, KYC notes, and desk prompts never leave your perimeter. Air-gapped intelligence, not a ChatGPT sidebar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Platform features -->
+  <section id="platform" class="feature-band section">
+    <div class="section-inner-wide">
+      <div class="center">
+        <p class="eyebrow reveal">Desk CRM</p>
+        <h2 class="reveal">One platform.<br />The entire back office.</h2>
+        <p class="lead reveal" style="margin-left:auto;margin-right:auto;">
+          From first lead to final payout — engineered for FX and crypto brokerages that outgrew Salesforce spreadsheets and legacy portals.
+        </p>
+      </div>
+
+      <div class="feature-row reveal">
+        <div class="feature-copy">
+          <div class="tag">Mission Control</div>
+          <h3>See your desk breathe.</h3>
+          <p>Registrations, deposits, open positions, and agent activity — live on one command surface. No switching between CRM, portal, and treasury tabs.</p>
+          <ul class="feature-list">
+            <li>Real-time registration and money cards</li>
+            <li>Hot Leads inbox with agent assignment</li>
+            <li>Client files, KYC, and permissions</li>
+            <li>Attribution and open-position views</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="ui-frame">
+            <div class="ui-chrome">
+              <span></span><span></span><span></span>
+              <div class="ui-url">Mission Control · Registrations &amp; floor</div>
+            </div>
+            <div class="ui-body">
+              <div class="ui-rail">
+                <div class="ui-rail-brand">Desk</div>
+                <div class="ui-rail-item on">Mission Control</div>
+                <div class="ui-rail-item">Hot Leads</div>
+                <div class="ui-rail-item">Users</div>
+              </div>
+              <div class="ui-main">
+                <div class="ui-title-row">
+                  <div class="ui-title">Today's desk pulse</div>
+                  <span class="ui-badge live">Live</span>
+                </div>
+                <div class="ui-kpis">
+                  <div class="ui-kpi up"><b>+23</b><em>New leads</em></div>
+                  <div class="ui-kpi up"><b>$41.2K</b><em>Deposits</em></div>
+                  <div class="ui-kpi"><b>312</b><em>Active traders</em></div>
+                </div>
+                <div class="ui-chart" aria-hidden="true">
+                  <div class="ui-bar" style="height:40%;opacity:0.45;"></div>
+                  <div class="ui-bar" style="height:65%;opacity:0.6;"></div>
+                  <div class="ui-bar" style="height:55%;opacity:0.5;"></div>
+                  <div class="ui-bar" style="height:80%;"></div>
+                  <div class="ui-bar" style="height:70%;opacity:0.75;"></div>
+                  <div class="ui-bar" style="height:90%;opacity:0.9;"></div>
+                  <div class="ui-bar" style="height:100%;"></div>
+                  <div class="ui-bar" style="height:72%;opacity:0.8;"></div>
+                </div>
+                <div class="ui-table">
+                  <div class="ui-tr head"><span>Lead</span><span>Source</span><span>Agent</span></div>
+                  <div class="ui-tr"><span>R. Okonkwo</span><span>FB / IB-12</span><span>M. Rossi</span></div>
+                  <div class="ui-tr"><span>K. Bergström</span><span>Google</span><span>Unassigned</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-row reverse reveal">
+        <div class="feature-copy">
+          <div class="tag">Treasury</div>
+          <h3>Cashier without the chaos.</h3>
+          <p>Deposits, withdrawals, ledger, and reconciliation — native to the same stack your agents already use. One audit trail from signup to payout.</p>
+          <ul class="feature-list">
+            <li>Integrated cashier and full ledger</li>
+            <li>Staff roles with granular permissions</li>
+            <li>Event logs for compliance review</li>
+            <li>No third-party payment CRM bolt-on</li>
+          </ul>
+        </div>
+        <div class="feature-visual dark">
+          <div class="ui-frame">
+            <div class="ui-chrome">
+              <span></span><span></span><span></span>
+              <div class="ui-url">Cashier · Treasury queue</div>
+            </div>
+            <div class="ui-body">
+              <div class="ui-main dark-bg" style="padding:14px;">
+                <div class="ui-title-row">
+                  <div class="ui-title">Withdrawal queue</div>
+                  <div class="ui-pills"><span class="ui-pill on">Pending 5</span><span class="ui-pill">Approved</span></div>
+                </div>
+                <div class="ui-queue">
+                  <div class="ui-queue-row">
+                    <div><strong>Wire · $12,400</strong><br /><span style="font-size:8px;color:#64748b;">Client #8841 · SEPA</span></div>
+                    <span class="ui-badge pending">Review</span>
+                  </div>
+                  <div class="ui-queue-row">
+                    <div><strong>Crypto · 0.42 BTC</strong><br /><span style="font-size:8px;color:#64748b;">Client #7720 · Cold wallet</span></div>
+                    <span class="ui-badge ok">Approved</span>
+                  </div>
+                  <div class="ui-queue-row">
+                    <div><strong>Card · $2,100</strong><br /><span style="font-size:8px;color:#64748b;">Client #9102 · Visa</span></div>
+                    <span class="ui-badge pending">AML check</span>
+                  </div>
+                </div>
+                <div style="margin-top:10px;padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06);">
+                  <div style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">Ledger balance</div>
+                  <div style="font-size:14px;font-weight:700;color:#34d399;margin-top:4px;">$1,284,902.44</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-row reveal">
+        <div class="feature-copy">
+          <div class="tag">Deployment</div>
+          <h3>Live in 48 hours.</h3>
+          <p>Your domain, your environment, your allowlists. We install, train, and hand over — with optional tailor-made VPN for secure team access across offices.</p>
+          <ul class="feature-list">
+            <li>Deploy on your dedicated VPS</li>
+            <li>Tailor-made VPN for distributed desks</li>
+            <li>IP allowlists and zero-trust perimeter</li>
+            <li>Dedicated partner support for operators</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="ui-frame">
+            <div class="ui-chrome">
+              <span></span><span></span><span></span>
+              <div class="ui-url">deploy@your-vps · curiocrm ship</div>
+            </div>
+            <div class="ui-body">
+              <div class="ui-main" style="background:#0a0f0a;padding:14px;">
+                <div class="ui-term">
+                  <span class="dim">$</span> ./elon-ship.mjs --domain admin.yourbrand.com<br />
+                  <span class="dim">→</span> Building React admin bundle… <span style="color:#86efac;">done</span><br />
+                  <span class="dim">→</span> Syncing to VPS 216.158.x.x… <span style="color:#86efac;">done</span><br />
+                  <span class="dim">→</span> pm2 restart curiocrm… <span style="color:#86efac;">online</span><br />
+                  <span class="dim">→</span> TLS certbot admin.yourbrand.com… <span style="color:#86efac;">valid</span><br />
+                  <span class="dim">→</span> Smoke: /api/health <span style="color:#86efac;">200 OK</span><br />
+                  <br />
+                  <span style="color:#a78bfa;font-weight:700;">✓ Live in 47h 12m</span> · your metal · your .env
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;">
+                  <div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:8px;">
+                    <div style="color:#64748b;">Domain</div>
+                    <div style="font-weight:700;color:#0f172a;margin-top:2px;">admin.yourbrand.com</div>
+                  </div>
+                  <div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:8px;">
+                    <div style="color:#64748b;">VPN desk access</div>
+                    <div style="font-weight:700;color:#0f172a;margin-top:2px;">Tailscale · enabled</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intelligence -->
+  <section id="intelligence" class="section" style="background:#000;color:#f5f5f7;">
+    <div class="section-inner">
+      <div class="feature-row">
+        <div class="feature-copy reveal">
+          <p class="eyebrow eyebrow-light">Wallstreet AI</p>
+          <h2 class="light" style="font-size:clamp(32px,5vw,48px);">Intelligence native<br />to the desk.</h2>
+          <p class="body-copy light">
+            Not a plugin. Not an API call to OpenAI. Wallstreet AI is woven into Mission Control — briefing agents, drafting call notes, and guiding operators through morning routines without exfiltrating a single client record.
+          </p>
+          <ul class="feature-list" style="margin-top:24px;">
+            <li style="color:#f5f5f7;">Runs on your server via Ollama — air-gapped by architecture</li>
+            <li style="color:#f5f5f7;">Zero logs to Curioni Labs — no secret copy of your chats</li>
+            <li style="color:#f5f5f7;">Instant fast-path when LLM sleeps — desk never stalls</li>
+            <li style="color:#f5f5f7;">KNOWME visual flows for CEO walkthroughs in 15 minutes</li>
+          </ul>
+          <a href="#contact" class="btn-primary" style="margin-top:28px;">Book a walkthrough</a>
+        </div>
+        <div class="feature-visual dark ai-panel reveal">
+          <div class="ui-frame">
+            <div class="ui-chrome">
+              <span></span><span></span><span></span>
+              <div class="ui-url">Wallstreet AI · Ollama on-box · qwen2.5</div>
+            </div>
+            <div class="ui-body">
+              <div class="ui-main dark-bg" style="padding:14px;">
+                <div class="ui-title-row">
+                  <div class="ui-title">Agent assist</div>
+                  <span class="ui-badge ok" style="background:rgba(34,197,94,0.15);color:#86efac;">Air-gapped</span>
+                </div>
+                <div class="ui-chat">
+                  <div class="ui-bubble user">Summarize KYC blockers for client #8841 before my call.</div>
+                  <div class="ui-bubble ai">
+                    <strong style="display:block;margin-bottom:4px;color:#c4b5fd;">Wallstreet AI</strong>
+                    Missing proof-of-address (uploaded passport only). Last deposit $4,200 wire — cleared. Suggest requesting utility bill + schedule callback within 2h SLA.
+                  </div>
+                  <div class="ui-bubble user">Draft follow-up email — professional, short.</div>
+                  <div class="ui-bubble ai" style="opacity:0.85;">
+                    <em style="font-style:normal;color:#a78bfa;">Drafting…</em> Hi Marcus, to activate your account we need one more document…
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compare -->
+  <section id="compare" class="compare section">
+    <div class="section-inner center">
+      <p class="eyebrow eyebrow-light reveal">Why brokers switch</p>
+      <h2 class="light reveal">Not another SaaS tab.</h2>
+      <p class="lead light reveal" style="margin-left:auto;margin-right:auto;">
+        Generic CRMs were built for sales teams at American enterprises — not for a Cyprus desk running FX and crypto with compliance breathing down their neck.
+      </p>
+      <div class="compare-grid reveal">
+        <div class="compare-col bad">
+          <h3>Typical cloud CRM</h3>
+          <ul>
+            <li><span>✕</span> CRM is one tab; portal and treasury live elsewhere</li>
+            <li><span>✕</span> Client PII sits in a US vendor's database</li>
+            <li><span>✕</span> AI bolted on — prompts leak to OpenAI / Google</li>
+            <li><span>✕</span> Custom broker workflows = six-figure SI project</li>
+            <li><span>✕</span> Internet outage or vendor policy change stops your desk</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <h3>Desk CRM on your VPS</h3>
+          <ul>
+            <li><span>✓</span> Portal + desk + treasury + risk in one sovereign stack</li>
+            <li><span>✓</span> Data on your metal — heartbeat metadata only to vendor license</li>
+            <li><span>✓</span> Wallstreet AI native — never leaves your perimeter</li>
+            <li><span>✓</span> Built for broker ops — white-label from day one</li>
+            <li><span>✓</span> You own the deployment — revoke-proof vendor license model</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions -->
+  <section id="solutions" class="section" style="background:#f5f5f7;">
+    <div class="section-inner center">
+      <p class="eyebrow reveal">Solutions</p>
+      <h2 class="reveal">Built for brokerages<br />that own their stack.</h2>
+      <p class="lead reveal" style="margin-left:auto;margin-right:auto;">
+        Like Leverate’s full back-office story — but sovereign. You install on your metal; we ship the broker OS.
+      </p>
+      <div class="solutions-grid reveal">
+        <div class="solution-card">
+          <div class="sol-thumb" aria-hidden="true">
+            <div class="sol-thumb-inner">
+              <div style="color:#e9d5ff;font-weight:700;font-size:9px;">Mission Control</div>
+              <div class="sol-thumb-bar" style="width:72%;"></div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot on"></span>+47 reg · $284K dep · 1,842 open</div>
+            </div>
+          </div>
+          <span class="solution-tag">FX &amp; Crypto</span>
+          <h3>Desk CRM</h3>
+          <p>Mission Control, hot leads, cashier, live book, and permissions — one Node stack on your VPS.</p>
+        </div>
+        <div class="solution-card">
+          <div class="sol-thumb" aria-hidden="true">
+            <div class="sol-thumb-inner">
+              <div style="color:#86efac;font-weight:700;font-size:9px;">Cashier queue</div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot on"></span>Wire $12,400 · pending review</div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot"></span>Ledger $1.28M · audit trail on</div>
+            </div>
+          </div>
+          <span class="solution-tag">Treasury</span>
+          <h3>Cashier &amp; PSP</h3>
+          <p>Deposits, withdrawals, wire queue, ledger, and payment radar — native, not bolted on.</p>
+        </div>
+        <div class="solution-card">
+          <div class="sol-thumb" aria-hidden="true">
+            <div class="sol-thumb-inner">
+              <div style="color:#93c5fd;font-weight:700;font-size:9px;">MT5 Bridge</div>
+              <div class="sol-thumb-bar" style="width:55%;background:linear-gradient(90deg,#2563eb,#60a5fa);"></div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot on"></span>EURUSD · sync · web terminal live</div>
+            </div>
+          </div>
+          <span class="solution-tag">Trading</span>
+          <h3>MT4 / MT5 Bridge</h3>
+          <p>Web terminal plus MetaTrader sync — your traders stay on familiar rails under your brand.</p>
+        </div>
+        <div class="solution-card">
+          <div class="sol-thumb" aria-hidden="true">
+            <div class="sol-thumb-inner">
+              <div style="color:#fcd34d;font-weight:700;font-size:9px;">Partners HQ</div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot on"></span>IB-12 · 34 leads · $8.2K comm</div>
+              <div class="sol-thumb-bar" style="width:48%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div>
+            </div>
+          </div>
+          <span class="solution-tag">Partners</span>
+          <h3>IB &amp; Attribution</h3>
+          <p>Partners HQ, commission matrix, campaigns, and pixels — grow allies without spreadsheet chaos.</p>
+        </div>
+        <div class="solution-card">
+          <div class="sol-thumb" aria-hidden="true">
+            <div class="sol-thumb-inner">
+              <div style="color:#f9a8d4;font-weight:700;font-size:9px;">Automation Studio</div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot on"></span>KYC chase → email draft → approve</div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot"></span>Dormant 14d · trigger queued</div>
+            </div>
+          </div>
+          <span class="solution-tag">Retain</span>
+          <h3>Automation Studio</h3>
+          <p>KYC chase, dormant trader, failed deposit — AI drafts with human approve, on your server.</p>
+        </div>
+        <div class="solution-card">
+          <div class="sol-thumb" aria-hidden="true">
+            <div class="sol-thumb-inner">
+              <div style="color:#c4b5fd;font-weight:700;font-size:9px;">Wallstreet AI</div>
+              <div class="sol-thumb-row"><span class="sol-thumb-dot on"></span>Ollama on-box · zero exfiltration</div>
+              <div style="padding:4px 8px;background:rgba(124,58,237,0.2);border-radius:6px;color:#e9d5ff;margin-top:2px;">"Draft follow-up for client #8841…"</div>
+            </div>
+          </div>
+          <span class="solution-tag">Intelligence</span>
+          <h3>Wallstreet AI</h3>
+          <p>Air-gapped Ollama desk — no client PII to OpenAI. Intelligence that never leaves your building.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="section-inner">
+      <div class="contact-band reveal">
+        <p class="eyebrow eyebrow-light">Launch your desk</p>
+        <h2>Not a broker yet? Perfect.</h2>
+        <p>Leave your name and email — we&apos;ll show you CRM, financial connections, and go-live. No firm name required.</p>
+        <form id="form-walkthrough" class="walkthrough-form" style="margin-top:20px;max-width:360px;margin-left:auto;margin-right:auto;text-align:left;">
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label style="display:block;margin-bottom:10px;font-size:13px;color:#f5f5f7;">Your name
+            <input name="name" type="text" required autocomplete="name" placeholder="First and last name" style="display:block;width:100%;margin-top:6px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.35);color:#fff;" />
+          </label>
+          <label style="display:block;margin-bottom:14px;font-size:13px;color:#f5f5f7;">Email
+            <input name="email" type="email" required autocomplete="email" placeholder="you@email.com" style="display:block;width:100%;margin-top:6px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.35);color:#fff;" />
+          </label>
+          <button type="submit" class="btn-primary" style="width:100%;border:none;cursor:pointer;">Request walkthrough</button>
+        </form>
+        <p id="walkthrough-feedback" class="msg" hidden style="margin-top:12px;font-size:13px;color:#a1a1a6;"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Curioni Labs</strong> — CRM software for FX &amp; crypto brokerages.</p>
+    <p style="margin-top:6px;">© Curioni Labs · B2B software only · Not investment advice · Not a regulated broker</p>
+    <p class="footer-ops">Already an operator? <a href="https://admin.curionilabs.com/admin">CRM login</a> (staff only)</p>
+  </footer>
+
+  <div id="consent-banner" class="consent-banner" role="dialog" aria-label="Cookie preferences" hidden>
+    <p>
+      We use essential cookies for secure access. If you accept analytics, we use first-party cookies to improve service for institutional users.
+      Name and email you provide are used for access and operator security notifications.
+      <a href="/privacy">Privacy</a>
+    </p>
+    <div class="consent-actions">
+      <button type="button" id="consent-essential">Essential only</button>
+      <button type="button" id="consent-reject" class="btn-accept" style="background:transparent;color:#1d1d1f;border:1px solid #d2d2d7">Reject analytics</button>
+      <button type="button" id="consent-accept" class="btn-accept">Accept analytics</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      /* Scroll reveal */
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add("visible"); });
+      }
+
+      var CONSENT_KEY = "curioni_consent_choice";
+      var VID_KEY = "curioni_vid";
+      var SID_KEY = "curioni_sid";
+
+      function getConsent() {
+        return localStorage.getItem(CONSENT_KEY) || "";
+      }
+      function setConsent(level) {
+        var v = level === "analytics" ? "v1|analytics" : "v1|essential";
+        localStorage.setItem(CONSENT_KEY, v);
+        document.cookie = "curioni_consent=" + encodeURIComponent(v) + ";path=/;max-age=31536000;SameSite=Lax";
+        return v;
+      }
+      function hasAnalytics() {
+        return getConsent() === "v1|analytics";
+      }
+      function uid() {
+        return "cv_" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+      }
+      function trackingIds() {
+        if (!hasAnalytics()) return { visitorId: "", sessionId: "" };
+        var vid = localStorage.getItem(VID_KEY);
+        if (!vid) {
+          vid = uid();
+          localStorage.setItem(VID_KEY, vid);
+          document.cookie = "curioni_vid=" + vid + ";path=/;max-age=31536000;SameSite=Lax";
+        }
+        var sid = sessionStorage.getItem(SID_KEY);
+        if (!sid) {
+          sid = uid();
+          sessionStorage.setItem(SID_KEY, sid);
+        }
+        return { visitorId: vid, sessionId: sid };
+      }
+
+      var metaApi = document.querySelector('meta[name="curioni-api"]');
+      var API_RAW = (metaApi && metaApi.getAttribute("content") || "").trim();
+      var API_BASES = API_RAW
+        ? API_RAW.split(",").map(function (s) { return s.trim().replace(/\/$/, ""); }).filter(Boolean)
+        : [];
+      if (API_BASES.indexOf("") === -1) API_BASES.push("");
+
+      function apiBases() {
+        var seen = {};
+        return API_BASES.filter(function (b) {
+          if (seen[b]) return false;
+          seen[b] = true;
+          return true;
+        });
+      }
+
+      function postJson(path, body) {
+        var bases = apiBases();
+        var i = 0;
+        var lastNet = "";
+        function attempt() {
+          if (i >= bases.length) {
+            var err = new Error("no_api");
+            err.detail = lastNet || "Access server unreachable. Try again in a moment.";
+            return Promise.reject(err);
+          }
+          var url = bases[i] + path;
+          i += 1;
+          return fetch(url, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(body)
+          }).then(function (r) {
+            return r.text().then(function (text) {
+              var b = {};
+              try { b = text ? JSON.parse(text) : {}; } catch (parseErr) {
+                var bad = new Error("bad_response");
+                bad.detail = r.ok
+                  ? "Unexpected server response."
+                  : "Access API not found on " + (bases[i - 1] || "this host") + " (HTTP " + r.status + ").";
+                return Promise.reject(bad);
+              }
+              if (r.ok) return { ok: true, b: b, via: "api" };
+              var err = new Error(b.error || "api_error");
+              err.detail = b.error || b.reason || "Access denied.";
+              return Promise.reject(err);
+            });
+          }).catch(function (e) {
+            if (e && e.detail) return Promise.reject(e);
+            lastNet = (e && e.message) ? String(e.message) : "network_error";
+            return attempt();
+          });
+        }
+        return attempt();
+      }
+
+      function visitorPing(event) {
+        if (!hasAnalytics()) return;
+        var ids = trackingIds();
+        postJson("/api/curionilabs/visitor-ping", {
+          event: event || "pageview",
+          consent: getConsent(),
+          visitorId: ids.visitorId,
+          sessionId: ids.sessionId,
+          referrer: document.referrer || "",
+          path: location.pathname || "/"
+        }).catch(function () {});
+      }
+
+      var banner = document.getElementById("consent-banner");
+      if (!getConsent()) banner.hidden = false;
+      document.getElementById("consent-essential").addEventListener("click", function () {
+        setConsent("essential");
+        banner.hidden = true;
+      });
+      document.getElementById("consent-reject").addEventListener("click", function () {
+        setConsent("essential");
+        banner.hidden = true;
+      });
+      document.getElementById("consent-accept").addEventListener("click", function () {
+        setConsent("analytics");
+        banner.hidden = true;
+        visitorPing("consent_analytics");
+      });
+      if (hasAnalytics()) visitorPing("pageview");
+
+      (function gateGuard() {
+        var bases = apiBases();
+        var i = 0;
+        function next() {
+          if (i >= bases.length) {
+            window.location.replace("/");
+            return;
+          }
+          fetch(bases[i] + "/api/curionilabs/access-status", { credentials: "include" })
+            .then(function (r) { return r.json(); })
+            .then(function (s) { if (!s.admitted) window.location.replace("/"); })
+            .catch(function () { i += 1; next(); });
+        }
+        next();
+      })();
+
+      var walkForm = document.getElementById("form-walkthrough");
+      if (walkForm) {
+        walkForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var fd = new FormData(walkForm);
+          if (fd.get("website")) return;
+          var ids = trackingIds();
+          var fb = document.getElementById("walkthrough-feedback");
+          var btn = walkForm.querySelector("button[type=submit]");
+          if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+          postJson("/api/concierge/lead", {
+            sessionId: ids.sessionId || ids.visitorId || ("hub_" + Date.now()),
+            name: String(fd.get("name") || "").trim(),
+            email: String(fd.get("email") || "").trim(),
+            message: "Product hub walkthrough request — launching a brokerage.",
+            page: location.pathname || "/curionilabs/",
+            source: "curioni_hub_walkthrough"
+          })
+            .then(function (x) {
+              if (x.ok && x.b.ok) {
+                fb.textContent = x.b.message || "Thanks — we'll email you shortly.";
+                fb.hidden = false;
+                walkForm.reset();
+              } else {
+                fb.textContent = (x.b && x.b.error) || (x.b && x.b.message) || "Could not send — try again.";
+                fb.hidden = false;
+              }
+            })
+            .catch(function () {
+              fb.textContent = "Could not reach the server — try support@curionilabs.com";
+              fb.hidden = false;
+            })
+            .finally(function () {
+              if (btn) { btn.disabled = false; btn.textContent = "Request walkthrough"; }
+            });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

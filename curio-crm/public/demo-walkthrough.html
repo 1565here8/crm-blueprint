@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CurioCRM — John Doe live demo story</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/brand/curionilabs/favicon.svg" />
+  <style>
+    :root {
+      --bg-main: #f4f6f8; --bg-sidebar: #0c1017; --teal: #0d9488;
+      --sidebar-w: 272px; --term-font: "JetBrains Mono", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; font-family: Roboto, system-ui, sans-serif; background: var(--bg-main); }
+
+    .crm-root { display: flex; min-height: 100vh; }
+    .crm-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .crm-header {
+      display: flex; align-items: center; gap: 12px; padding: 12px 24px;
+      border-bottom: 1px solid #e2e8f0; background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+    }
+    .bc { font-size: 12px; color: #94a3b8; } .bc strong { color: #475569; font-weight: 500; }
+    .search { flex: 1; max-width: 28rem; margin-left: 12px; padding: 8px 12px 8px 36px;
+      border: 1px solid #e2e8f0; border-radius: 12px; background: #f1f5f9; font-size: 14px; }
+    .hdr-r { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+    .bell { position: relative; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; background: #fff; }
+    .bell-dot { position: absolute; top: -2px; right: -2px; min-width: 16px; height: 16px; border-radius: 999px;
+      background: #0d9488; color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .user-chip { display: flex; gap: 8px; align-items: center; border: 1px solid #e2e8f0; border-radius: 12px; background: #f1f5f9; padding: 6px 10px; }
+    .avatar { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#14b8a6,#059669); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+    .crm-content { flex: 1; overflow: auto; padding: 20px 24px 100px; position: relative; }
+    .page-h1 { font-size: 22px; font-weight: 600; color: #0f172a; }
+    .page-sub { margin-top: 4px; font-size: 14px; color: #64748b; max-width: 44rem; line-height: 1.5; }
+
+    .panel { border-radius: 12px; border: 1px solid rgba(226,232,240,.8); background: #fff; box-shadow: 0 1px 2px rgba(148,163,184,.12); }
+    .panel-flush { overflow: hidden; }
+    table.data { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.data thead tr { background: #0f172a; color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    table.data th, table.data td { padding: 11px 14px; text-align: left; border-bottom: 1px solid #f1f5f9; }
+    table.data tbody tr:hover { background: rgba(20,184,166,.06); }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .pill-green { background: rgba(34,197,94,.15); color: #15803d; }
+    .pill-amber { background: rgba(245,158,11,.15); color: #b45309; }
+    .pill-blue { background: rgba(59,130,246,.15); color: #1d4ed8; }
+    .pill-teal { background: rgba(20,184,166,.15); color: #0f766e; }
+    .btn-teal { border: none; border-radius: 8px; background: #0d9488; color: #fff; font-size: 13px; font-weight: 600; padding: 7px 14px; cursor: pointer; }
+    .btn-navy { border: none; border-radius: 8px; background: #1a3a7a; color: #fff; font-size: 13px; font-weight: 600; padding: 7px 14px; }
+
+    .crm-sidebar { width: var(--sidebar-w); background: var(--bg-sidebar); border-left: 1px solid #1e293b; display: flex; flex-direction: column; flex-shrink: 0; }
+    .sb-brand { padding: 18px 16px; border-bottom: 1px solid #1e293b; }
+    .sb-brand img { height: 34px; }
+    .sb-nav { flex: 1; overflow-y: auto; padding: 12px; }
+    .sb-zone { margin-bottom: 14px; border-radius: 12px; padding: 8px 4px; }
+    .sb-zone.featured { border: 1px solid rgba(45,212,191,.4); background: linear-gradient(135deg,rgba(20,184,166,.15),rgba(6,78,59,.2)); }
+    .sb-zone-label { padding: 0 10px 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .18em; color: #64748b; }
+    .sb-zone.featured .sb-zone-label { color: #99f6e4; }
+    .sb-link { display: flex; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; font-size: 13px; color: #94a3b8; margin: 1px 0; }
+    .sb-link.on { background: rgba(20,184,166,.15); color: #5eead4; box-shadow: inset 0 0 0 1px rgba(20,184,166,.3); }
+
+    .guide { margin-top: 20px; border-radius: 12px; border: 1px solid rgba(153,246,228,.5); background: linear-gradient(to bottom,rgba(240,253,250,.5),#fff); padding: 16px 18px; }
+    .guide-title { font-size: 15px; font-weight: 600; color: #0f172a; }
+    .guide-text { margin-top: 6px; font-size: 14px; line-height: 1.55; color: #475569; }
+
+    .highlight { outline: 2px solid #14b8a6; outline-offset: 2px; border-radius: 8px; animation: hi 1.2s ease-in-out infinite; }
+    @keyframes hi { 0%,100%{ box-shadow: 0 0 0 0 rgba(20,184,166,.5); } 50%{ box-shadow: 0 0 0 6px rgba(20,184,166,0); } }
+
+    /* Aria public chat */
+    .public-scene { display: grid; grid-template-columns: 1fr 360px; gap: 16px; min-height: 420px; }
+    .public-hero { border-radius: 12px; background: linear-gradient(135deg,#18214d,#25282a); color: #fff; padding: 28px; }
+    .public-hero h2 { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
+    .demo-ribbon { display: inline-block; margin-top: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; color: #84c561; border: 1px solid rgba(132,197,97,.4); padding: 4px 10px; border-radius: 4px; }
+    .aria-panel { border-radius: 12px; border: 1px solid #e2e8f0; background: #fff; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,.08); }
+    .aria-head { background: #0d9488; color: #fff; padding: 12px 14px; font-weight: 700; font-size: 14px; }
+    .aria-body { flex: 1; padding: 14px; font-size: 13px; line-height: 1.5; }
+    .bubble-u { color: #0d9488; margin-bottom: 10px; }
+    .bubble-a { color: #334155; margin-bottom: 10px; }
+
+    /* Profile + action rail */
+    .profile-layout { display: grid; grid-template-columns: 88px 1fr; gap: 12px; }
+    .action-rail { background: #1a3d6e; border-radius: 8px; overflow: hidden; align-self: start; position: sticky; top: 0; }
+    .action-rail-h { background: #153258; text-align: center; font-size: 9px; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,.8); padding: 8px 4px; }
+    .action-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; padding: 10px 4px; font-size: 10px; color: rgba(255,255,255,.9); border: none; background: transparent; }
+    .action-btn.call { background: rgba(255,255,255,.15); }
+    .profile-tabs { display: flex; border-radius: 8px 8px 0 0; overflow: hidden; background: #0d9488; margin-top: 12px; }
+    .ptab { padding: 8px 14px; font-size: 13px; color: rgba(255,255,255,.85); }
+    .ptab.on { background: #fff; color: #0d9488; font-weight: 600; }
+    .field-row { display: flex; border-bottom: 1px solid #f0f0f0; padding: 8px 0; font-size: 13px; }
+    .field-row span:first-child { width: 42%; color: #64748b; }
+    .kyc-bar { margin-top: 12px; height: 10px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+    .kyc-fill { height: 100%; background: linear-gradient(90deg,#059669,#34d399); width: 0%; transition: width 1s ease; }
+    .kyc-fill.done { width: 100%; }
+
+    /* AI Of Wallstreet */
+    .ai-panel {
+      position: fixed; bottom: 72px; right: calc(var(--sidebar-w) + 20px); z-index: 60;
+      width: 400px; max-width: calc(100vw - var(--sidebar-w) - 40px); height: 480px;
+      display: flex; flex-direction: column; border-radius: 12px; border: 1px solid rgba(16,185,129,.3);
+      background: #000; color: #a7f3d0; font-family: var(--term-font); box-shadow: 0 25px 60px rgba(0,0,0,.65);
+    }
+    .ai-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid rgba(16,185,129,.25); background: linear-gradient(90deg,#000,rgba(6,78,59,.3),#000); }
+    .ai-title { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #6ee7b7; }
+    .ai-log { flex: 1; overflow-y: auto; padding: 12px; font-size: 12px; line-height: 1.45; }
+    .ai-msg-u { color: #34d399; margin-bottom: 10px; }
+    .ai-msg-a { color: #d1fae5; margin-bottom: 10px; white-space: pre-wrap; }
+    .ai-instant { color: #fbbf24; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+
+    /* Toasts */
+    .toast-stack { position: fixed; top: 72px; right: calc(var(--sidebar-w) + 16px); z-index: 70; display: flex; flex-direction: column; gap: 8px; max-width: 320px; }
+    .toast { border-radius: 10px; border: 1px solid #e2e8f0; background: #fff; padding: 10px 12px; font-size: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.12); animation: slideIn .35s ease; }
+    .toast strong { display: block; font-size: 13px; color: #0f172a; margin-bottom: 2px; }
+    .toast.teal { border-left: 4px solid #0d9488; }
+    .toast.amber { border-left: 4px solid #f59e0b; }
+    .toast.green { border-left: 4px solid #22c55e; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin: 16px 0; }
+    .kpi { padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0; background: linear-gradient(135deg,rgba(20,184,166,.12),rgba(20,184,166,.03)); }
+    .kpi-label { font-size: 10px; font-weight: 700; text-transform: uppercase; opacity: .65; }
+    .kpi-val { font-size: 22px; font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; }
+    .kpi-val.bump { animation: bump .5s ease; color: #0d9488; }
+    @keyframes bump { 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+
+    .inline-edit { background: #fef9c3; border: 1px solid #facc15; border-radius: 4px; padding: 2px 6px; font-weight: 600; }
+    .formula { font-size: 11px; color: #64748b; margin-top: 4px; }
+
+    .notif-grid { display: grid; grid-template-columns: 140px repeat(3,1fr); gap: 1px; background: #e2e8f0; border-radius: 8px; overflow: hidden; font-size: 12px; margin-top: 12px; }
+    .notif-cell { background: #fff; padding: 8px 10px; }
+    .notif-head { background: #f8fafc; font-weight: 600; font-size: 11px; }
+    .chk { color: #0d9488; font-weight: 700; }
+
+    .edit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 14px; }
+    .edit-card { padding: 14px; border-radius: 10px; border: 1px dashed #94a3b8; background: #f8fafc; font-size: 13px; }
+    .edit-card strong { display: block; margin-bottom: 4px; }
+
+    .presenter { position: fixed; bottom: 0; left: 0; right: var(--sidebar-w); z-index: 80; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(15,23,42,.96); border-top: 1px solid #334155; color: #e2e8f0; font-size: 12px; }
+    .presenter button { font: inherit; cursor: pointer; border: 1px solid #475569; background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 6px 11px; font-size: 11px; }
+    .presenter button.primary { background: #0d9488; border-color: #0d9488; font-weight: 700; }
+    .presenter select { font: inherit; border: 1px solid #475569; background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 5px 8px; font-size: 11px; }
+    .prog { flex: 1; height: 4px; background: #334155; border-radius: 2px; overflow: hidden; }
+    .prog > div { height: 100%; background: linear-gradient(90deg,#059669,#2dd4bf); width: 0%; transition: width .25s linear; }
+
+    .start-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(12,16,23,.94); display: flex; align-items: center; justify-content: center; }
+    .start-card { max-width: 520px; padding: 28px; background: #fff; border-radius: 16px; text-align: center; }
+    .start-card h2 { font-size: 22px; margin-bottom: 10px; }
+    .start-card p { color: #64748b; line-height: 1.55; font-size: 14px; margin-bottom: 16px; text-align: left; }
+    .start-card li { margin-bottom: 6px; margin-left: 18px; }
+    .hidden { display: none !important; }
+
+    @media (max-width:900px) { .crm-sidebar { display: none; } .presenter, .ai-panel, .toast-stack { right: 0; } .public-scene { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="start-overlay" id="start">
+    <div class="start-card">
+      <h2>John Doe — full CRM story demo</h2>
+      <p>One continuous walkthrough (simulated data):</p>
+      <ul>
+        <li>Aria helps John register on www</li>
+        <li>Lead → client profile → click-to-call → deposit €500</li>
+        <li>Comments + admin alerts</li>
+        <li>AI Of Wallstreet: KYC for client 001 → docs upload → instant verify</li>
+        <li>Mission Control updates live → Funded Accounts → CPL $80 → PV €420</li>
+        <li>Notifications for every step → everything editable for the broker</li>
+      </ul>
+      <button class="btn-teal" id="btn-start" style="padding:12px 28px;font-size:15px">Start story (~9 min)</button>
+    </div>
+  </div>
+
+  <div class="crm-root">
+    <div class="crm-main">
+      <header class="crm-header">
+        <div class="bc" id="bc">Pulse › <strong>Mission Control</strong></div>
+        <input class="search" placeholder="Find client by email or username…" readonly />
+        <div class="hdr-r">
+          <div class="bell" id="bell">🔔<span class="bell-dot hidden" id="bell-count">0</span></div>
+          <div class="user-chip"><div class="avatar">O</div><span style="font-size:12px;font-weight:600">owner</span></div>
+        </div>
+      </header>
+      <main class="crm-content" id="content"></main>
+    </div>
+    <aside class="crm-sidebar" id="sidebar"></aside>
+  </div>
+
+  <div class="toast-stack" id="toasts"></div>
+  <div class="ai-panel hidden" id="ai-panel">
+    <div class="ai-head"><span class="ai-title">AI Of Wallstreet</span><span style="font-size:9px;color:#059669">● online</span></div>
+    <div class="ai-log" id="ai-log"></div>
+  </div>
+
+  <div class="presenter">
+    <button type="button" class="primary" id="btn-play">▶ Play</button>
+    <button type="button" id="btn-voice">Voice off</button>
+    <select id="voice-preset"><option value="documentary">Documentary narrator</option><option value="executive">Executive briefing</option><option value="cinematic">Cinematic host</option></select>
+    <span id="step-label">1 / 15</span>
+    <div class="prog"><div id="prog"></div></div>
+    <span id="time-lbl">0:00</span>
+    <button type="button" id="btn-fs">Fullscreen</button>
+  </div>
+
+  <script>
+    const ZONES = [
+      { id: "pulse", label: "Pulse", featured: false, items: ["Mission Control", "Live Floor", "Hot Leads", "Action Queue", "Street AI"] },
+      { id: "users", label: "Users", items: ["All Clients", "Funded Accounts"] },
+      { id: "money", label: "Money", items: ["Pending In", "Credits In", "Payouts", "Live Book"] },
+      { id: "systems", label: "Systems", items: ["Settings", "Notifications", "Brand DNA", "Spread"] },
+    ];
+
+    const SCENES = [
+      { id: "aria", active: null, zone: "Public", title: "www — John registers, Aria helps", dur: 34,
+        bc: "Public › Registration",
+        narration: "John Doe lands on the broker website. Aria concierge captures his name, email, and phone, and creates a demo registration. That capture flows straight into your CRM as a new lead.",
+        render: () => `
+          <div class="public-scene">
+            <div class="public-hero"><div class="demo-ribbon">Demo only · simulated</div><h2>Multi-asset terminal</h2><p style="opacity:.8;margin-top:8px;font-size:14px">Stocks · Crypto · FX — practice environment</p><p style="margin-top:20px;font-size:13px;opacity:.7">John clicks Register…</p></div>
+            <div class="aria-panel highlight" id="aria-box">
+              <div class="aria-head">Aria — concierge</div>
+              <div class="aria-body">
+                <p class="bubble-u"><strong>John:</strong> Hi, I want to open a practice account.</p>
+                <p class="bubble-a"><strong>Aria:</strong> Welcome! I can help. Your name, email, and phone for a callback?</p>
+                <p class="bubble-u"><strong>John:</strong> John Doe · john.doe@email.com · +1 555 0101</p>
+                <p class="bubble-a"><strong>Aria:</strong> Perfect — account created. A desk agent will follow up. Lead sent to CRM ✓</p>
+              </div>
+            </div>
+          </div>` },
+      { id: "lead", active: "Hot Leads", zone: "Pulse", title: "Hot Leads — John appears", dur: 28,
+        narration: "The lead lands in Hot Leads with status New. The agent sees source Aria chat, assigns the lead, and opens the client record.",
+        render: () => `
+          <h1 class="page-h1">Hot Leads</h1><p class="page-sub">Concierge captures waiting for a human.</p>
+          <div class="panel panel-flush" style="margin-top:16px"><table class="data"><thead><tr><th>Lead</th><th>Email</th><th>Source</th><th>Status</th><th>Agent</th></tr></thead>
+          <tbody><tr class="highlight"><td><strong>John Doe</strong> <span style="color:#64748b">#001</span></td><td>john.doe@email.com</td><td>Aria chat</td><td><span class="pill pill-amber">New</span></td><td><button class="btn-teal" style="padding:4px 10px;font-size:11px">Assign</button></td></tr></tbody></table></div>` },
+      { id: "profile", active: "All Clients", zone: "Users", title: "Client 001 — profile & click-to-call", dur: 32,
+        narration: "Open All Clients — John Doe profile shows status Registered, email and phone filled. Click-to-call dials from the action rail. Every field is editable for your desk.",
+        render: () => `
+          <h1 class="page-h1">John Doe <span class="pill pill-green">Live</span></h1><p class="page-sub">Client #001 · john_doe · Agent: Maria</p>
+          <div class="profile-layout">
+            <div class="action-rail"><div class="action-rail-h">Choose Action</div>
+              <button class="action-btn call highlight">📞<span>Click to call</span></button>
+              <button class="action-btn">📝 Note</button><button class="action-btn">✉ Email</button></div>
+            <div><div class="profile-tabs"><span class="ptab on">Profile</span><span class="ptab">$ Money</span><span class="ptab">Docs</span><span class="ptab">Notes/Emails</span></div>
+            <div class="panel" style="padding:14px;margin-top:0;border-radius:0 0 8px 8px">
+              <div class="field-row"><span>CRM status</span><span><span class="pill pill-blue">Registered</span></span></div>
+              <div class="field-row"><span>Email</span><span>john.doe@email.com</span></div>
+              <div class="field-row highlight"><span>Phone</span><span>+1 555 0101 · click-to-call ready</span></div>
+              <div class="field-row"><span>Country</span><span>Germany</span></div>
+              <div class="field-row"><span>KYC</span><span><span class="pill pill-amber">Pending</span></span></div>
+            </div></div>
+          </div>` },
+      { id: "deposit", active: "Pending In", zone: "Money", title: "Pending In — adjust & approve €500", dur: 30,
+        narration: "John requests a €500 deposit. Treasury opens Pending In, reviews the amount, and approves. You can adjust amount, method, or reject before money credits.",
+        render: () => `
+          <h1 class="page-h1">Pending In</h1><p class="page-sub">Approve or reject incoming funding.</p>
+          <div class="panel panel-flush" style="margin-top:16px"><table class="data"><thead><tr><th>Client</th><th>Amount</th><th>Method</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody><tr class="highlight"><td>John Doe #001</td><td><span class="inline-edit">€500.00</span></td><td>Card</td><td><span class="pill pill-amber">Pending</span></td><td><button class="btn-teal" style="padding:4px 12px;font-size:11px">Approve ✓</button></td></tr></tbody></table></div>` },
+      { id: "money", active: "Credits In", zone: "Money", title: "Credits In — money on account", dur: 26,
+        narration: "After approval, €500 posts to Credits In and the client Money tab. Balance events log every movement for compliance.",
+        render: () => `
+          <h1 class="page-h1">John Doe — $ Money</h1><p class="page-sub">Balance, deposits, and ledger for client #001.</p>
+          <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)"><div class="kpi highlight"><div class="kpi-label">Cash balance</div><div class="kpi-val">€500.00</div></div>
+          <div class="kpi"><div class="kpi-label">Total deposits</div><div class="kpi-val">€500.00</div></div>
+          <div class="kpi"><div class="kpi-label">Investment</div><div class="kpi-val">€500.00</div></div></div>
+          <div class="panel panel-flush"><table class="data"><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody><tr><td>Just now</td><td>Card deposit</td><td style="color:#15803d;font-weight:600">+€500.00</td><td><span class="pill pill-green">Credited</span></td></tr></tbody></table></div>` },
+      { id: "comment", active: "All Clients", zone: "Users", title: "Notes — admin adds comment", dur: 26,
+        narration: "The agent adds an internal comment on John’s profile — callback completed, client ready for KYC. Comments are editable inline and visible on the main client table.",
+        render: () => `
+          <h1 class="page-h1">Notes / Emails — John Doe</h1><p class="page-sub">Internal comms log on the client record.</p>
+          <div class="panel highlight" style="margin-top:16px;padding:14px">
+            <p style="font-size:12px;color:#64748b">New note · owner · just now</p>
+            <p style="margin-top:8px;font-size:14px;line-height:1.5">Called John — confirmed €500 deposit. Request KYC docs before trading unlock.</p>
+          </div>
+          <div class="panel" style="margin-top:10px;padding:14px;opacity:.7"><p style="font-size:13px;color:#64748b">Previous: Lead assigned from Aria capture.</p></div>` },
+      { id: "alert", active: "Mission Control", zone: "Pulse", title: "Admin alerts — system notifies desk", dur: 24,
+        narration: "Every step triggers in-app alerts on the bell icon — new lead, deposit approved, note added. The admin sees activity without refreshing.",
+        render: () => `
+          <h1 class="page-h1">Mission Control</h1><p class="page-sub">Watch the bell — system notifications for each action.</p>
+          <p style="margin-top:20px;font-size:14px;color:#475569">Alerts appear top-right (see toast stack →)</p>
+          <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><div class="kpi-label">New leads today</div><div class="kpi-val">1</div></div>
+          <div class="kpi"><div class="kpi-label">Pending deposits</div><div class="kpi-val">0</div></div>
+          <div class="kpi"><div class="kpi-label">Open tasks</div><div class="kpi-val">1</div></div></div>`,
+        toasts: [
+          { t: "New Hot Lead", b: "John Doe — Aria chat capture", c: "teal" },
+          { t: "Deposit approved", b: "€500 credited to client #001", c: "green" },
+          { t: "Note added", b: "owner commented on John Doe", c: "amber" },
+        ], bell: 3 },
+      { id: "ai-kyc", active: "Street AI", zone: "Pulse", title: "AI Of Wallstreet — run KYC for 001", dur: 32,
+        narration: "Open AI Of Wallstreet — the black terminal copilot. Tell it: Do KYC for client 001. It queues document collection and updates the client compliance flag.",
+        render: () => `<h1 class="page-h1">Street AI</h1><p class="page-sub">AI Of Wallstreet handles operational commands in plain English.</p><p style="margin-top:16px;color:#64748b;font-size:13px">→ See AI panel bottom-right</p>`,
+        ai: [
+          { r: "u", t: "Do KYC for client 001" },
+          { r: "a", t: "Opening KYC workflow for John Doe (#001).\n• Status: Pending → Documents requested\n• Ext. docs flag: ON\n• Client portal upload link sent\n• Notification: kyc_document → admin in-app ✓" },
+        ], aiOpen: true },
+      { id: "kyc-docs", active: "All Clients", zone: "Users", title: "Docs uploading — passport & proof", dur: 30,
+        narration: "Documents upload to the Docs tab — passport and proof of address. Admin gets an instant notification that KYC files arrived.",
+        render: () => `
+          <h1 class="page-h1">Docs — John Doe #001</h1><p class="page-sub">KYC / documents</p>
+          <div class="panel" style="margin-top:16px;padding:16px">
+            <p style="font-size:13px;font-weight:600;margin-bottom:10px">KYC progress</p>
+            <div class="kyc-bar"><div class="kyc-fill done" id="kyc-bar"></div></div>
+            <p style="margin-top:8px;font-size:12px;color:#15803d;font-weight:600">Uploading… 100%</p>
+            <table class="data" style="margin-top:14px"><thead><tr><th>File</th><th>Type</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr class="highlight"><td>passport_john_doe.pdf</td><td>ID</td><td><span class="pill pill-teal">Uploaded</span></td></tr>
+              <tr class="highlight"><td>utility_bill.pdf</td><td>POA</td><td><span class="pill pill-teal">Uploaded</span></td></tr>
+            </tbody></table>
+          </div>`,
+        toasts: [{ t: "KYC document uploaded", b: "passport_john_doe.pdf — client #001", c: "teal" }] },
+      { id: "ai-verify", active: "Street AI", zone: "Pulse", title: "AI verifies KYC — instant answer", dur: 30,
+        narration: "Ask AI Of Wallstreet: double-check if KYC for 001 is approved. It reads the doc status and answers instantly — approved, ready for Funded Accounts.",
+        render: () => `<h1 class="page-h1">Street AI</h1><p class="page-sub">Second command — verification in seconds.</p>`,
+        ai: [
+          { r: "u", t: "Double check if KYC of 001 is approved" },
+          { r: "a", t: "✓ INSTANT CHECK — Client #001 John Doe\n• passport_john_doe.pdf — verified\n• utility_bill.pdf — verified\n• KYC status: APPROVED\n• CRM status ready → Funded\n• Mission Control FTD counter will update.", instant: true },
+        ], aiOpen: true },
+      { id: "mission", active: "Mission Control", zone: "Pulse", title: "Mission Control — live board update", dur: 32,
+        narration: "Mission Control dashboard ticks live — registrations, deposits, and FTD count update as John moves through the funnel. No manual refresh.",
+        render: () => `
+          <h1 class="page-h1">Mission Control</h1><p class="page-sub">Registrations, treasury, and desk activity at a glance.</p>
+          <div class="kpi-grid"><div class="kpi"><div class="kpi-label">Registrations</div><div class="kpi-val" id="m-reg">0</div></div>
+          <div class="kpi"><div class="kpi-label">Deposits today</div><div class="kpi-val" id="m-dep">€0</div></div>
+          <div class="kpi"><div class="kpi-label">FTDs</div><div class="kpi-val" id="m-ftd">0</div></div>
+          <div class="kpi"><div class="kpi-label">Funded clients</div><div class="kpi-val" id="m-fund">0</div></div>
+          <div class="kpi"><div class="kpi-label">Conversion</div><div class="kpi-val" id="m-cr">0%</div></div></div>
+          <p style="font-size:13px;color:#64748b">Counters animate when KYC approves →</p>`,
+        animateMission: true },
+      { id: "depositors", active: "Funded Accounts", zone: "Users", title: "Funded Accounts — John Doe full row", dur: 34,
+        narration: "Funded Accounts shows John Doe with email, KYC bar approved, CPL eighty dollars, investment five hundred euros. All columns editable inline for marketing and desk.",
+        render: () => `
+          <h1 class="page-h1">Funded Accounts</h1><p class="page-sub">Clients who have funded — marketing metrics visible.</p>
+          <div class="panel panel-flush" style="margin-top:16px"><table class="data"><thead><tr>
+            <th>Name</th><th>Email</th><th>KYC</th><th>CPL</th><th>Investment</th><th>PV</th><th>Status</th>
+          </tr></thead><tbody><tr class="highlight">
+            <td><strong>John Doe</strong><br><span style="font-size:11px;color:#64748b">#001</span></td>
+            <td>john.doe@email.com</td>
+            <td><div class="kyc-bar" style="width:80px;display:inline-block;vertical-align:middle"><div class="kyc-fill done"></div></div> <span class="pill pill-green">Approved</span></td>
+            <td>$80.00</td><td>€500.00</td><td id="pv-cell">€500.00</td><td><span class="pill pill-green">Funded</span></td>
+          </tr></tbody></table></div>` },
+      { id: "pv", active: "All Clients", zone: "Users", title: "Adjust PV — €420 (investment − CPL)", dur: 30,
+        narration: "Player Value adjusts to four hundred twenty euros — investment minus CPL or CPA. Click any cell to edit; formula can auto-calculate marketing ROI.",
+        render: () => `
+          <h1 class="page-h1">All Clients — edit PV inline</h1><p class="page-sub">Click any cell to edit — saved to CRM instantly.</p>
+          <div class="panel panel-flush" style="margin-top:16px"><table class="data"><thead><tr><th>Client</th><th>Investment</th><th>CPL</th><th>PV (player value)</th></tr></thead>
+          <tbody><tr><td>John Doe #001</td><td>€500.00</td><td>$80.00</td>
+          <td class="highlight"><span class="inline-edit" id="pv-edit">€420.00</span><div class="formula">PV = Investment − CPL/CPA → €500 − €80 ≈ €420</div></td></tr></tbody></table></div>`,
+        animatePv: true },
+      { id: "notifications", active: "Notifications", zone: "Systems", title: "Notifications — every step logged", dur: 32,
+        narration: "System → Notifications shows every event fired to admin: registration, deposit, KYC upload, KYC approved, PV updated. Email, push, and in-app toggles per agent.",
+        render: () => `
+          <h1 class="page-h1">Notifications</h1><p class="page-sub">Per-agent alert matrix — email · push · in-app.</p>
+          <div class="notif-grid">
+            <div class="notif-cell notif-head">Event</div><div class="notif-cell notif-head">Email</div><div class="notif-cell notif-head">Push</div><div class="notif-cell notif-head">In-app</div>
+            <div class="notif-cell">New lead (John Doe)</div><div class="notif-cell chk">✓</div><div class="notif-cell chk">✓</div><div class="notif-cell chk">✓</div>
+            <div class="notif-cell">Deposit approved €500</div><div class="notif-cell chk">✓</div><div class="notif-cell">—</div><div class="notif-cell chk">✓</div>
+            <div class="notif-cell">KYC document uploaded</div><div class="notif-cell">—</div><div class="notif-cell chk">✓</div><div class="notif-cell chk">✓</div>
+            <div class="notif-cell">KYC approved #001</div><div class="notif-cell chk">✓</div><div class="notif-cell chk">✓</div><div class="notif-cell chk">✓</div>
+            <div class="notif-cell">PV updated → €420</div><div class="notif-cell">—</div><div class="notif-cell">—</div><div class="notif-cell chk">✓</div>
+          </div>` },
+      { id: "editable", active: "Settings", zone: "Systems", title: "Everything editable — broker owns the stack", dur: 36,
+        narration: "The whole platform is white-label and editable: Brand DNA, spread, commissions, permissions, columns, notifications, statuses. Your broker firm configures every part — this demo used simulated data end to end.",
+        render: () => `
+          <h1 class="page-h1">Settings — your broker, your rules</h1><p class="page-sub">Every module configurable without code.</p>
+          <div class="edit-grid">
+            <div class="edit-card highlight"><strong>Brand DNA</strong>Logo, name, public URLs</div>
+            <div class="edit-card highlight"><strong>Spread & commissions</strong>Desk economics per asset</div>
+            <div class="edit-card highlight"><strong>Permissions</strong>Sub-admin sidebar access</div>
+            <div class="edit-card highlight"><strong>Client columns</strong>Drag, resize, CPL, PV, KYC</div>
+            <div class="edit-card highlight"><strong>Statuses & pipelines</strong>Dynamic CRM moves</div>
+            <div class="edit-card highlight"><strong>Payment gateways</strong>PSP routing</div>
+          </div>
+          <div class="guide" style="margin-top:20px"><div class="guide-title">Story complete — John Doe #001</div>
+          <div class="guide-text">Aria → Hot Lead → Click to call → €500 deposit → Comments → AI KYC → Docs → AI verify → Mission Control live → Funded → PV €420 → Notifications. Replay anytime at <strong>/demo-walkthrough.html</strong></div></div>` },
+    ];
+
+    const TOTAL = SCENES.reduce((s, c) => s + c.dur, 0);
+    let idx = 0, playing = false, voice = false, voiceHd = false, voicePreset = localStorage.getItem("demoVoicePreset") || "documentary";
+    let elapsed = 0, sceneElapsed = 0, speakGen = 0, currentAudio = null;
+
+    const $ = id => document.getElementById(id);
+
+    function sidebar(active) {
+      $("sidebar").innerHTML = `<div class="sb-brand"><img src="/brand/curionilabs/logo-full-dark.svg" alt="CURIONILABS" onerror="this.outerHTML='<div style=color:#5eead4;font-weight:800;font-size:13px;letter-spacing:2px>CURIONILABS</div>'"></div><nav class="sb-nav">` +
+        ZONES.map(z => `<div class="sb-zone${z.featured ? " featured" : ""}"><div class="sb-zone-label">${z.label}</div>` +
+          z.items.map(it => `<div class="sb-link${it === active ? " on" : ""}"><span>●</span><span>${it}</span></div>`).join("") + `</div>`).join("") + `</nav>`;
+    }
+
+    function toasts(list) {
+      $("toasts").innerHTML = (list || []).map(t => `<div class="toast ${t.c}"><strong>${t.t}</strong>${t.b}</div>`).join("");
+    }
+
+    function aiPanel(msgs, open) {
+      $("ai-panel").classList.toggle("hidden", !open);
+      if (!open) return;
+      $("ai-log").innerHTML = (msgs || []).map(m =>
+        m.r === "u" ? `<div class="ai-msg-u">&gt; ${m.t}</div>` :
+        `<div>${m.instant ? '<span class="ai-instant">instant · 0.4s</span><br>' : ""}<span class="ai-msg-a">${m.t.replace(/\n/g,"<br>")}</span></div>`
+      ).join("");
+    }
+
+    function stopSpeech() {
+      speakGen++;
+      if (currentAudio) { currentAudio.pause(); URL.revokeObjectURL(currentAudio.src); currentAudio = null; }
+      if ("speechSynthesis" in window) speechSynthesis.cancel();
+    }
+
+    async function speak(text) {
+      if (!voice) return;
+      stopSpeech();
+      const gen = speakGen;
+      if (voiceHd) {
+        try {
+          const res = await fetch("/api/public/demo-narration", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text, preset: voicePreset }) });
+          if (res.ok && (res.headers.get("content-type") || "").includes("audio")) {
+            const blob = await res.blob();
+            if (gen !== speakGen) return;
+            const url = URL.createObjectURL(blob);
+            currentAudio = new Audio(url);
+            currentAudio.onended = () => URL.revokeObjectURL(url);
+            await currentAudio.play();
+            return;
+          }
+        } catch (_) {}
+      }
+      if (!("speechSynthesis" in window)) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.86; u.pitch = 0.82;
+      speechSynthesis.speak(u);
+    }
+
+    function animateMission() {
+      const steps = [
+        ["m-reg", "1"], ["m-dep", "€500"], ["m-ftd", "1"], ["m-fund", "1"], ["m-cr", "100%"],
+      ];
+      steps.forEach(([id, val], i) => setTimeout(() => {
+        const el = $(id); if (!el) return;
+        el.textContent = val; el.classList.add("bump");
+      }, 400 + i * 500));
+    }
+
+    function show(i) {
+      idx = Math.max(0, Math.min(SCENES.length - 1, i));
+      const s = SCENES[idx];
+      sceneElapsed = 0;
+      sidebar(s.active);
+      $("bc").innerHTML = `${s.zone} › <strong>${s.title.split("—")[0].trim()}</strong>`;
+      $("content").innerHTML = s.render() + `<div class="guide"><div class="guide-title">Step ${idx + 1} — ${s.title}</div><div class="guide-text">${s.narration}</div></div>`;
+      $("step-label").textContent = `${idx + 1} / ${SCENES.length}`;
+      toasts(s.toasts || []);
+      aiPanel(s.ai, s.aiOpen);
+      const bell = $("bell-count");
+      if (s.bell) { bell.textContent = s.bell; bell.classList.remove("hidden"); } else { bell.classList.add("hidden"); }
+      if (s.animateMission) setTimeout(animateMission, 600);
+      if (s.animatePv) setTimeout(() => { const c = $("pv-edit"); if (c) c.textContent = "€420.00"; }, 1200);
+      speak(s.narration);
+    }
+
+    function tick() {
+      if (!playing) return;
+      sceneElapsed += 0.25; elapsed += 0.25;
+      $("prog").style.width = (elapsed / TOTAL * 100) + "%";
+      $("time-lbl").textContent = fmt(elapsed) + " / " + fmt(TOTAL);
+      if (sceneElapsed >= SCENES[idx].dur) {
+        if (idx >= SCENES.length - 1) { playing = false; $("btn-play").textContent = "▶ Replay"; return; }
+        show(idx + 1);
+      }
+    }
+
+    function fmt(sec) {
+      const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+      return m + ":" + String(s).padStart(2, "0");
+    }
+
+    $("btn-start").onclick = () => { $("start").classList.add("hidden"); playing = true; show(0); };
+    $("btn-play").onclick = () => {
+      if (!playing && idx >= SCENES.length - 1 && elapsed >= TOTAL - 1) { elapsed = 0; show(0); }
+      playing = !playing;
+      $("btn-play").textContent = playing ? "⏸ Pause" : "▶ Play";
+      if (!playing) stopSpeech(); else speak(SCENES[idx].narration);
+    };
+    $("btn-voice").onclick = () => {
+      voice = !voice; localStorage.setItem("demoVoiceOn", voice ? "1" : "0");
+      $("btn-voice").textContent = voice ? "Voice on" : "Voice off";
+      if (voice && playing) speak(SCENES[idx].narration); else stopSpeech();
+    };
+    $("voice-preset").value = voicePreset;
+    $("voice-preset").onchange = e => { voicePreset = e.target.value; localStorage.setItem("demoVoicePreset", voicePreset); if (voice && playing) speak(SCENES[idx].narration); };
+    $("btn-fs").onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    document.addEventListener("keydown", e => {
+      if (e.code === "Space") { e.preventDefault(); $("btn-play").click(); }
+      if (e.code === "ArrowRight") show(Math.min(SCENES.length - 1, idx + 1));
+      if (e.code === "ArrowLeft") show(Math.max(0, idx - 1));
+      if (e.code === "KeyF") $("btn-fs").click();
+    });
+
+    fetch("/api/public/demo-voices").then(r => r.json()).then(d => {
+      voiceHd = !!d.hd;
+      if (voiceHd && localStorage.getItem("demoVoiceOn") !== "0") { voice = true; $("btn-voice").textContent = "Voice on"; }
+    }).catch(() => {});
+
+    show(0);
+    setInterval(tick, 250);
+  </script>
+</body>
+</html>

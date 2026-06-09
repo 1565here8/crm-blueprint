@@ -1,0 +1,33 @@
+.mobile-trader-app {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: env(safe-area-inset-top);
+}
+
+.mobile-trader-app input,
+.mobile-trader-app button {
+  font-size: 16px;
+}
+
+.mobile-trader-bottom-nav {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.mobile-trader-install-banner {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+}
+
+.mobile-trader-chart-panel {
+  min-height: 38dvh;
+}
+
+.mobile-trader-chart .tradingview-widget-container,
+.mobile-trader-chart .tradingview-widget-container__widget {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.mobile-trader-chart iframe {
+  border-radius: 0 !important;
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Curioni Trader" />
+    <title>Curioni Labs Trader</title>
+    <meta
+      name="description"
+      content="Curioni Labs mobile trading — FX, stocks, crypto. Install on iPhone or Android."
+    />
+    <meta name="application-name" content="curionilabs.mobile.trader" />
+    <meta name="theme-color" content="#1a1033" />
+    <link rel="manifest" href="/mobile-trader/manifest.webmanifest" id="pwa-manifest" />
+    <script>
+      (function () {
+        if ((location.hostname || "").toLowerCase() === "trader.curionilabs.com") {
+          var m = document.getElementById("pwa-manifest");
+          if (m) m.href = "/mobile-trader/manifest-trader.webmanifest";
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/brand/curionilabs/favicon.svg" />
+    <link rel="apple-touch-icon" href="/brand/curionilabs/mark.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#0c0818] text-white antialiased">
+    <div id="root">
+      <p style="margin:0;padding:2rem;text-align:center;color:#94a3b8;font-family:system-ui,sans-serif">
+        Loading Curioni Trader…
+      </p>
+    </div>
+    <script type="module" src="/src/mobile-trader/main.tsx"></script>
+  </body>
+</html>

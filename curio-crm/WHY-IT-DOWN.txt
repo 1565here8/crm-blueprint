@@ -1,0 +1,61 @@
+﻿WHY THE SITE GOES DOWN
+======================
+
+Your live site (CurioCRM.com) runs FROM YOUR PC right now:
+  Your PC  -->  Cloudflare tunnel  -->  CurioCRM.com
+
+So if YOUR PC stops running the app, the website dies.
+
+
+COMMON REASONS IT GOES DOWN
+---------------------------
+1. You closed the black GO-LIVE window (most common)
+2. You closed the "CurioCRM-api" window (second window)
+3. PC went to sleep or restarted
+4. Power cut / Windows update restart
+5. App crashed (SESSION_SECRET error, port 3002 busy)
+6. You ran UPDATE-LIVE but did not restart GO-LIVE
+
+
+HOW TO NEVER LET IT HAPPEN AGAIN (on your PC)
+--------------------------------------------
+
+OPTION A — Auto-restart (recommended now)
+  Double-click: GO-LIVE-AUTO.bat
+  - ONE window only
+  - Checks health every 30 seconds
+  - Restarts app + tunnel automatically if they crash
+  - Keep PC on, disable sleep (see below)
+
+OPTION B — Start when Windows boots
+  1. Double-click: INSTALL-AUTO-START.bat
+  2. After every login, site starts minimized automatically
+  3. Still need PC on + no sleep
+
+OPTION C — Permanent 24/7 (best long-term)
+  Fix Njalla VPS SSH and deploy there.
+  Then site runs 24/7 without your PC.
+  Your PC only needed to push code updates.
+
+
+PC SETTINGS (do once)
+---------------------
+1. Settings → System → Power → Screen and sleep
+   Set Sleep = Never (when plugged in)
+2. Settings → Windows Update → Active hours
+   So updates don't restart PC during the day
+
+
+QUICK CHECK — is it running?
+----------------------------
+Open in browser: http://127.0.0.1:3002/api/health
+  {"ok":true,...}  = app is up on your PC
+  Error / can't connect = app is down → run GO-LIVE-AUTO.bat
+
+
+WHICH FILE TO USE
+-----------------
+GO-LIVE-AUTO.bat     ← USE THIS (auto-restart, one window)
+GO-LIVE.bat          ← old (two windows, no auto-restart)
+UPDATE-LIVE.bat      ← after code changes, then restart GO-LIVE-AUTO
+OPEN-ADMIN.bat       ← opens admin CRM in browser

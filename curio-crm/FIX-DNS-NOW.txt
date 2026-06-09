@@ -1,0 +1,47 @@
+﻿FIX CLOUDFLARE DNS (do this in browser FIRST)
+=============================================
+
+Your DNS records are BROKEN (show [object Object]).
+Fix them manually, then run GO-LIVE.bat on your PC.
+
+
+STEP 1 - DELETE broken records
+------------------------------
+1. Open https://dash.cloudflare.com
+2. Click CurioCRM.com
+3. Left menu: DNS -> Records
+4. DELETE both rows that say "Tunnel" and [object Object]
+   (click Delete on each row)
+
+
+STEP 2 - ADD correct records
+----------------------------
+Click "+ Add record" TWO times:
+
+Record 1:
+  Type:    CNAME
+  Name:    @
+  Target:  80d169a0-ac64-46a7-80d9-94282e2e3129.cfargotunnel.com
+  Proxy:   ON (orange cloud)
+  Save
+
+Record 2:
+  Type:    CNAME
+  Name:    www
+  Target:  80d169a0-ac64-46a7-80d9-94282e2e3129.cfargotunnel.com
+  Proxy:   ON (orange cloud)
+  Save
+
+
+STEP 3 - Run on your PC
+-----------------------
+Double-click:
+  C:\Users\torah\Desktop\wallstreet-sim\GO-LIVE.bat
+
+Keep window OPEN.
+
+
+STEP 4 - Test
+-------------
+Open https://CurioCRM.com
+Press Ctrl + Shift + R

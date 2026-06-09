@@ -1,0 +1,31 @@
+# Tells Cursor's indexer to skip these huge folders.
+# Massively reduces CPU, RAM, and disk I/O. Agent can still read them on demand.
+
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+.next/
+.cache/
+.parcel-cache/
+
+# Local runtime data / DBs / logs (not source code)
+data/
+logs/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+*.log
+
+# Lockfiles (huge, almost never useful)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS noise
+.DS_Store
+Thumbs.db
+*.swp

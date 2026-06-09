@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Broker demo — simulated trading</title>
+    <meta
+      name="description"
+      content="Independent multi-asset broker demo for authorized demonstrations. Simulated trading only; not a live broker. Not affiliated with eToro Group Ltd or etoro.com."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <meta property="og:title" content="Broker demo platform" />
+    <meta
+      property="og:description"
+      content="Demo only — simulated stocks, crypto, and FX plus institutional CRM. Not affiliated with eToro."
+    />
+    <meta name="theme-color" content="#84c561" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/brand/curionilabs/favicon.svg" />
+    <link rel="apple-touch-icon" href="/brand/curionilabs/mark.svg" />
+    <script>
+      (function () {
+        var h = (location.hostname || "").toLowerCase().split(",")[0].trim().replace(/:\d+$/, "");
+        var isCurioni = h === "curionilabs.com" || h.endsWith(".curionilabs.com");
+        var adminHosts = ["admin.curionilabs.com", "crm.curionilabs.com", "216.158.237.213", "admin.localhost", "localhost", "127.0.0.1"];
+        if (isCurioni) {
+          document.title = "Curioni Labs CRM";
+          if (/etoropros\.com/i.test(location.href)) {
+            location.replace(
+              location.href
+                .replace(/etoropros\.com/gi, "curionilabs.com")
+            );
+            return;
+          }
+        }
+        var p = location.pathname;
+        var localDev = h === "127.0.0.1" || h === "localhost" || h === "admin.localhost";
+        if (adminHosts.indexOf(h) !== -1 || (localDev && (p === "/admin" || p.indexOf("/admin/") === 0))) {
+          window.__CRM_ADMIN_SHELL = true;
+          if (p === "/" || p === "/login" || p === "/signup") {
+            location.replace("/admin" + location.search + location.hash);
+            return;
+          }
+        }
+        if (isCurioni) {
+          window.__curionilabsNavGuard = true;
+        }
+        if (h === "etoropros.com" || h.endsWith(".etoropros.com")) {
+          location.replace(location.href.replace(/etoropros\.com/gi, "curionilabs.com"));
+          return;
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 font-roboto">
+    <div id="root">
+      <p style="margin:0;padding:2rem;text-align:center;color:#94a3b8;font-family:system-ui,sans-serif">Loading Curioni CRM…</p>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="CurioniLabs mark">
+  <defs>
+    <linearGradient id="cl-bg" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2DD4BF"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="cl-core" x1="180" y1="160" x2="340" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ECFDF5"/>
+      <stop offset="1" stop-color="#A7F3D0"/>
+    </linearGradient>
+  </defs>
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#cl-bg)"/>
+  <path d="M318 156c-72-44-168-8-188 72-18 72 30 148 104 168 58 16 118-6 154-54" stroke="#042F2E" stroke-width="44" stroke-linecap="round" fill="none"/>
+  <circle cx="332" cy="176" r="28" fill="url(#cl-core)"/>
+  <circle cx="332" cy="176" r="12" fill="#042F2E"/>
+</svg>

@@ -1,0 +1,28 @@
+{
+  "id": "curionilabs.mobile.trader",
+  "name": "Curioni Labs Trader",
+  "short_name": "Curioni Trader",
+  "description": "Mobile trading for FX, stocks, and crypto — Curioni Labs",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0818",
+  "theme_color": "#1a1033",
+  "categories": ["finance", "business"],
+  "icons": [
+    {
+      "src": "/brand/curionilabs/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/curionilabs/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "prefer_related_applications": false
+}

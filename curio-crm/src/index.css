@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-zinc-950 text-zinc-100 antialiased font-roboto;
+}
+
+.landing-site {
+  @apply bg-broker-surface text-broker-navy antialiased font-roboto;
+}
+
+.landing-site--pro {
+  @apply font-roboto text-broker-navy antialiased;
+  letter-spacing: 0.01em;
+}
+
+.landing-site--pro .btn-broker-green {
+  @apply shadow-md shadow-broker-navy/10;
+}
+
+.landing-glass-card {
+  @apply rounded-xl border border-black/10 bg-white/90 backdrop-blur-sm;
+}
+
+.btn-broker-green {
+  @apply inline-flex items-center justify-center rounded-md border border-broker-green bg-broker-green px-6 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-broker-green;
+}
+
+.btn-broker-dark {
+  @apply inline-flex items-center justify-center rounded-md bg-broker-dark px-8 py-3 text-base font-medium text-white transition hover:bg-broker-blue;
+}
+
+.btn-broker-outline {
+  @apply inline-flex items-center justify-center rounded-md border border-white/30 bg-transparent px-6 py-2.5 text-sm font-medium text-white transition hover:bg-white/10;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.client-terminal {
+  @apply bg-slate-100 text-slate-800;
+  background-image: none;
+}
+
+.terminal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(63 63 70) transparent;
+}
+
+.terminal-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb {
+  background: rgb(63 63 70);
+  border-radius: 3px;
+}
+
+.terminal-shell {
+  backdrop-filter: blur(8px);
+}

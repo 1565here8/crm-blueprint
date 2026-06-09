@@ -1,0 +1,108 @@
+# Auto-deploy to Njalla VPS on every push to main.
+# GitHub → Settings → Secrets → Actions: VPS_HOST, VPS_USER, VPS_SSH_KEY, VPS_PORT (optional)
+# If deploy is skipped/fails: see ELON-FIX.txt and SHOW-GITHUB-KEY.bat
+
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "server/**"
+      - "scripts/**"
+      - "public/**"
+      - "shared/**"
+      - "index.html"
+      - "mobile-trader/**"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.config.ts"
+      - "tsconfig.json"
+      - "tailwind.config.js"
+      - "postcss.config.js"
+      - "ecosystem.config.cjs"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-vps
+  # Never cancel an in-flight deploy — avoids half-updated VPS (old PM2 + new dist).
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build (verify code compiles)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Build OK
+        run: test -f dist/index.html
+
+  deploy:
+    name: Deploy over SSH
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require VPS secrets
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          missing=""
+          [ -z "$VPS_HOST" ] && missing="$missing VPS_HOST"
+          [ -z "$VPS_USER" ] && missing="$missing VPS_USER"
+          [ -z "$VPS_SSH_KEY" ] && missing="$missing VPS_SSH_KEY"
+          if [ -n "$missing" ]; then
+            echo "::error::GitHub Actions secrets not set:$missing"
+            echo "Fix: curio-crm → Settings → Secrets and variables → Actions"
+            echo "  VPS_HOST = 80.78.30.85"
+            echo "  VPS_USER = root"
+            echo "  VPS_SSH_KEY = private key from SHOW-GITHUB-KEY.bat (full file)"
+            echo "Or deploy once by hand: CONNECT-SERVER.bat then bash scripts/deploy-vps.sh"
+            exit 1
+          fi
+          case "$VPS_SSH_KEY" in
+            *BEGIN*OPENSSH*|*BEGIN*RSA*|*BEGIN*EC*)
+              ;;
+            *)
+              echo "::error::VPS_SSH_KEY must be a full OpenSSH private key (entire SHOW-GITHUB-KEY.bat output, including BEGIN/END lines)"
+              exit 1
+              ;;
+          esac
+
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script_stop: true
+          command_timeout: 15m
+          script: |
+            set -euo pipefail
+            if [ ! -d /var/www/etoropros ]; then
+              echo "::error::/var/www/etoropros missing — SSH works but app not installed. Run scripts/one-shot-recovery.sh on the VPS first."
+              exit 1
+            fi
+            cd /var/www/etoropros
+            bash scripts/deploy-vps.sh
+            echo "--- post-deploy health (localhost)"
+            for i in 1 2 3 4 5; do
+              if curl -fsS http://127.0.0.1:3002/api/health >/dev/null 2>&1; then
+                curl -fsS http://127.0.0.1:3002/api/health
+                echo ""
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "::error::CRM did not respond on :3002/api/health after deploy"
+            exit 1

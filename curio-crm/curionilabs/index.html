@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Curioni Labs — the first smart CRM built for brokerages you own. Sovereign desk, treasury, and AI on your infrastructure." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="curioni-api" content="https://admin.curionilabs.com" />
+  <title>Curioni Labs · Enter</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23000' width='32' height='32' rx='8'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='%23f5f5f7' font-family='system-ui' font-size='14' font-weight='600'%3EC%3C/text%3E%3C/svg%3E" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+      font-weight: 400;
+      color: #1d1d1f;
+      background: #fbfbfd;
+      line-height: 1.47059;
+      letter-spacing: -0.022em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(251, 251, 253, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      transition: background 0.3s;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 980px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #1d1d1f;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: none;
+      gap: 28px;
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.8;
+    }
+    .nav-links a {
+      color: #1d1d1f;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 0.6; }
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 400;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .nav-cta:hover { text-decoration: underline; }
+    @media (min-width: 768px) {
+      .nav { height: 44px; }
+      .nav-links { display: flex; }
+    }
+
+    /* ── Typography ── */
+    .eyebrow {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #bf4800;
+      margin: 0 0 12px;
+    }
+    .eyebrow-light { color: #f5a623; }
+    h1 {
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0;
+      color: #1d1d1f;
+    }
+    h1.light { color: #f5f5f7; }
+    h2 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.07143;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    h2.light { color: #f5f5f7; }
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.16667;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .lead {
+      font-size: clamp(19px, 2.5vw, 24px);
+      font-weight: 400;
+      line-height: 1.33337;
+      letter-spacing: 0.009em;
+      color: #86868b;
+      margin: 16px 0 0;
+      max-width: 680px;
+    }
+    .lead.light { color: #a1a1a6; }
+    .body-copy {
+      font-size: 17px;
+      line-height: 1.47059;
+      color: #86868b;
+      margin: 0;
+    }
+    .body-copy.light { color: #a1a1a6; }
+
+    /* ── Layout ── */
+    .section {
+      padding: clamp(64px, 10vw, 120px) 22px;
+    }
+    .section-inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .section-inner-wide {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .center { text-align: center; }
+    .center .lead { margin-left: auto; margin-right: auto; }
+
+    /* ── Hero ── */
+    .hero {
+      padding-top: clamp(100px, 14vw, 160px);
+      padding-bottom: clamp(64px, 8vw, 100px);
+      text-align: center;
+      background: #fbfbfd;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 980px;
+      background: rgba(0, 0, 0, 0.04);
+      font-size: 12px;
+      font-weight: 500;
+      color: #1d1d1f;
+      margin-bottom: 20px;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #30d158;
+    }
+    .hero-cta-row {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 22px;
+      border-radius: 980px;
+      background: #0066cc;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 400;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #0077ed; }
+    .btn-link {
+      font-size: 17px;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .btn-link:hover { text-decoration: underline; }
+    .hero-visual {
+      margin: 56px auto 0;
+      max-width: 900px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #1d1d1f 0%, #2d2d30 50%, #1d1d1f 100%);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+      aspect-ratio: 16 / 9;
+      position: relative;
+    }
+    .hero-visual-inner {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      font-size: 11px;
+      color: #a1a1a6;
+    }
+    @media (max-width: 640px) {
+      .hero-visual-inner { grid-template-columns: 1fr; }
+      .hero-sidebar { display: none; }
+    }
+    .hero-sidebar {
+      background: rgba(0, 0, 0, 0.35);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 20px 16px;
+    }
+    .hero-sidebar-item {
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+    }
+    .hero-sidebar-item.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f5f5f7;
+    }
+    .hero-main {
+      padding: 24px 28px;
+    }
+    .hero-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .hero-stat {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .hero-stat strong {
+      display: block;
+      font-size: 22px;
+      font-weight: 600;
+      color: #f5f5f7;
+      letter-spacing: -0.02em;
+    }
+    .hero-stat span { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── Sovereign strip ── */
+    .sovereign {
+      background: #000;
+      color: #f5f5f7;
+    }
+    .pill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      margin-top: 48px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .pill-card {
+      background: #1d1d1f;
+      padding: 36px 32px;
+    }
+    .pill-card .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+    .pill-card h3 { color: #f5f5f7; font-size: 21px; }
+    .pill-card p { margin: 10px 0 0; font-size: 15px; color: #a1a1a6; line-height: 1.5; }
+
+    /* ── Feature rows (Apple product style) ── */
+    .feature-band {
+      background: #f5f5f7;
+    }
+    .feature-band.alt { background: #fbfbfd; }
+    .feature-row {
+      display: grid;
+      gap: 40px;
+      align-items: center;
+      margin-top: 64px;
+    }
+    @media (min-width: 768px) {
+      .feature-row { grid-template-columns: 1fr 1fr; gap: 64px; }
+      .feature-row.reverse .feature-copy { order: 2; }
+      .feature-row.reverse .feature-visual { order: 1; }
+    }
+    .feature-copy .tag {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0066cc;
+      margin-bottom: 8px;
+    }
+    .feature-copy h3 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .feature-copy p {
+      margin: 16px 0 0;
+      font-size: 17px;
+      color: #86868b;
+      line-height: 1.5;
+    }
+    .feature-list {
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      color: #1d1d1f;
+      padding: 8px 0;
+    }
+    .feature-list li::before {
+      content: "✓";
+      color: #30d158;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .feature-visual {
+      border-radius: 18px;
+      background: linear-gradient(160deg, #e8e8ed 0%, #d2d2d7 100%);
+      aspect-ratio: 4 / 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-visual.dark {
+      background: linear-gradient(160deg, #2d2d30 0%, #1d1d1f 100%);
+      color: #f5f5f7;
+    }
+    .feature-visual-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .feature-visual-sub {
+      font-size: 12px;
+      color: #86868b;
+      margin-top: 4px;
+    }
+    .feature-visual.dark .feature-visual-sub { color: #a1a1a6; }
+    .feature-visual-glow {
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 60%;
+      height: 60%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 102, 204, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Compare ── */
+    .compare {
+      background: #000;
+      color: #f5f5f7;
+    }
+    .compare-grid {
+      display: grid;
+      gap: 2px;
+      margin-top: 48px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) {
+      .compare-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .compare-col {
+      padding: 36px 32px;
+    }
+    .compare-col.bad { background: #1d1d1f; }
+    .compare-col.good { background: #0a2540; }
+    .compare-col h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .compare-col.bad h3 { color: #ff6b6b; }
+    .compare-col.good h3 { color: #30d158; }
+    .compare-col ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .compare-col li {
+      font-size: 15px;
+      color: #a1a1a6;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .compare-col li:last-child { border-bottom: none; }
+
+    /* ── Stats ribbon ── */
+    .stats-ribbon {
+      background: #f5f5f7;
+      padding: 48px 22px;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+    .stats-grid {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #1d1d1f;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: #86868b;
+      margin-top: 4px;
+    }
+
+    /* ── Access panel ── */
+    .access-section {
+      background: #fbfbfd;
+    }
+    .access-grid {
+      display: grid;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .access-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+    }
+    .access-copy h2 { font-size: clamp(32px, 4vw, 48px); }
+    .access-points {
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .access-points li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: #86868b;
+      padding: 10px 0;
+    }
+    .access-points li svg { flex-shrink: 0; margin-top: 2px; }
+
+    .card {
+      padding: 32px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #86868b;
+      margin-bottom: 16px;
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #d2d2d7;
+      background: #fbfbfd;
+      color: #1d1d1f;
+      font: inherit;
+      font-size: 17px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
+    }
+    .btn-submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 980px;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 400;
+      cursor: pointer;
+      color: #fff;
+      background: #0066cc;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: #0077ed; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
+
+    .msg {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.45;
+    }
+    .msg.err {
+      color: #d70015;
+      background: rgba(215, 0, 21, 0.06);
+      border: 1px solid rgba(215, 0, 21, 0.15);
+    }
+    .msg.ok {
+      color: #248a3d;
+      background: rgba(36, 138, 61, 0.06);
+      border: 1px solid rgba(36, 138, 61, 0.15);
+    }
+
+    .secure-note {
+      margin-top: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: #86868b;
+      line-height: 1.5;
+    }
+    .secure-note svg { flex-shrink: 0; margin-top: 1px; opacity: 0.6; }
+    .field-hint {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #86868b;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #f5f5f7;
+      padding: 20px 22px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: #86868b;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+    }
+    footer strong { color: #1d1d1f; font-weight: 500; }
+
+    /* ── Consent ── */
+    .consent-banner {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 200;
+      padding: 16px 22px 20px;
+      background: rgba(251, 251, 253, 0.95);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.08);
+    }
+    .consent-banner[hidden] { display: none; }
+    .consent-banner p {
+      margin: 0 0 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #86868b;
+      max-width: 680px;
+    }
+    .consent-banner a { color: #0066cc; }
+    .consent-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .consent-actions button {
+      border-radius: 980px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 400;
+      cursor: pointer;
+      border: 1px solid #d2d2d7;
+      background: transparent;
+      color: #1d1d1f;
+    }
+    .consent-actions .btn-accept {
+      background: #0066cc;
+      color: #fff;
+      border: none;
+    }
+
+    /* ── Reveal animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Curioni Labs</a>
+      <a href="#access" class="nav-cta">Enter</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero section">
+    <div class="section-inner center">
+      <div class="hero-badge reveal"><span class="hero-badge-dot"></span> First-of-its-kind smart brokerage CRM</div>
+      <h1 class="reveal">The CRM your<br />brokerage owns.</h1>
+      <p class="lead reveal">
+        Curioni Labs built Desk CRM — a sovereign back-office where portal, desk, treasury, and AI live on <em>your</em> infrastructure. Not rented tabs. Not someone else's cloud. Yours.
+      </p>
+      <p class="lead reveal" style="margin-top:8px;font-size:17px;">Launching a brokerage? You don&apos;t need a firm name yet — just your name and email to explore the platform.</p>
+    </div>
+  </section>
+
+  <!-- Access -->
+  <section id="access" class="access-section section">
+    <div class="section-inner">
+      <div class="access-grid">
+        <div class="access-copy reveal">
+          <p class="eyebrow">Welcome</p>
+          <h2>Explore Curioni Labs.</h2>
+          <p class="body-copy">
+            Broker technology for FX and crypto desks — sovereign CRM, treasury, MT bridge, and air-gapped AI. Instant access to our public site; no approval queue.
+          </p>
+          <ul class="access-points">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              Full product site — platform, solutions, compare
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              Book a walkthrough — not a redirect to operator CRM
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              Staff CRM login is separate — footer link only
+            </li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <form id="form-email">
+            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <label>Your name
+              <input name="name" type="text" required autocomplete="name" placeholder="First and last name" />
+            </label>
+            <label>Email
+              <input name="email" type="email" required autocomplete="email" placeholder="you@email.com" />
+              <span class="field-hint">We only ask for this so you can explore the site — you&apos;ll land in Hot Leads for a callback.</span>
+            </label>
+            <button type="submit" class="btn-submit">Enter Curioni Labs</button>
+          </form>
+
+          <p id="feedback" class="msg" hidden></p>
+
+          <p class="secure-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Public product site only. Operator CRM is for staff — not this form.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Curioni Labs</strong> — CRM software for FX &amp; crypto brokerages.</p>
+    <p style="margin-top:6px;">© Curioni Labs · B2B software only · Not investment advice · Not a regulated broker</p>
+  </footer>
+
+  <div id="consent-banner" class="consent-banner" role="dialog" aria-label="Cookie preferences" hidden>
+    <p>
+      We use essential cookies for secure access. If you accept analytics, we use first-party cookies to improve service for institutional users.
+      Name and email you provide are used for access and operator security notifications.
+      <a href="/privacy">Privacy</a>
+    </p>
+    <div class="consent-actions">
+      <button type="button" id="consent-essential">Essential only</button>
+      <button type="button" id="consent-reject" class="btn-accept" style="background:transparent;color:#1d1d1f;border:1px solid #d2d2d7">Reject analytics</button>
+      <button type="button" id="consent-accept" class="btn-accept">Accept analytics</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      /* Scroll reveal */
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add("visible"); });
+      }
+
+      var CONSENT_KEY = "curioni_consent_choice";
+      var VID_KEY = "curioni_vid";
+      var SID_KEY = "curioni_sid";
+
+      function getConsent() {
+        return localStorage.getItem(CONSENT_KEY) || "";
+      }
+      function setConsent(level) {
+        var v = level === "analytics" ? "v1|analytics" : "v1|essential";
+        localStorage.setItem(CONSENT_KEY, v);
+        document.cookie = "curioni_consent=" + encodeURIComponent(v) + ";path=/;max-age=31536000;SameSite=Lax";
+        return v;
+      }
+      function hasAnalytics() {
+        return getConsent() === "v1|analytics";
+      }
+      function uid() {
+        return "cv_" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+      }
+      function trackingIds() {
+        if (!hasAnalytics()) return { visitorId: "", sessionId: "" };
+        var vid = localStorage.getItem(VID_KEY);
+        if (!vid) {
+          vid = uid();
+          localStorage.setItem(VID_KEY, vid);
+          document.cookie = "curioni_vid=" + vid + ";path=/;max-age=31536000;SameSite=Lax";
+        }
+        var sid = sessionStorage.getItem(SID_KEY);
+        if (!sid) {
+          sid = uid();
+          sessionStorage.setItem(SID_KEY, sid);
+        }
+        return { visitorId: vid, sessionId: sid };
+      }
+
+      var metaApi = document.querySelector('meta[name="curioni-api"]');
+      var API_RAW = (metaApi && metaApi.getAttribute("content") || "").trim();
+      var API_BASES = API_RAW
+        ? API_RAW.split(",").map(function (s) { return s.trim().replace(/\/$/, ""); }).filter(Boolean)
+        : [];
+      if (API_BASES.indexOf("") === -1) API_BASES.push("");
+
+      function apiBases() {
+        var seen = {};
+        return API_BASES.filter(function (b) {
+          if (seen[b]) return false;
+          seen[b] = true;
+          return true;
+        });
+      }
+
+      function postJson(path, body) {
+        var bases = apiBases();
+        var i = 0;
+        var lastNet = "";
+        function attempt() {
+          if (i >= bases.length) {
+            var err = new Error("no_api");
+            err.detail = lastNet || "Access server unreachable. Try again in a moment.";
+            return Promise.reject(err);
+          }
+          var url = bases[i] + path;
+          i += 1;
+          return fetch(url, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(body)
+          }).then(function (r) {
+            return r.text().then(function (text) {
+              var b = {};
+              try { b = text ? JSON.parse(text) : {}; } catch (parseErr) {
+                var bad = new Error("bad_response");
+                bad.detail = r.ok
+                  ? "Unexpected server response."
+                  : "Access API not found on " + (bases[i - 1] || "this host") + " (HTTP " + r.status + ").";
+                return Promise.reject(bad);
+              }
+              if (r.ok) return { ok: true, b: b, via: "api" };
+              var err = new Error(b.error || "api_error");
+              err.detail = b.error || b.reason || "Access denied.";
+              return Promise.reject(err);
+            });
+          }).catch(function (e) {
+            if (e && e.detail) return Promise.reject(e);
+            lastNet = (e && e.message) ? String(e.message) : "network_error";
+            return attempt();
+          });
+        }
+        return attempt();
+      }
+
+      function goHub(hub) {
+        window.location.href = hub || "/curionilabs/";
+      }
+
+      var feedback = document.getElementById("feedback");
+
+      function showMsg(text, ok) {
+        feedback.hidden = false;
+        feedback.textContent = text;
+        feedback.className = "msg " + (ok ? "ok" : "err");
+        feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+
+      function visitorPing(event) {
+        if (!hasAnalytics()) return;
+        var ids = trackingIds();
+        postJson("/api/curionilabs/visitor-ping", {
+          event: event || "pageview",
+          consent: getConsent(),
+          visitorId: ids.visitorId,
+          sessionId: ids.sessionId,
+          referrer: document.referrer || "",
+          path: location.pathname || "/"
+        }).catch(function () {});
+      }
+
+      var banner = document.getElementById("consent-banner");
+      if (!getConsent()) banner.hidden = false;
+      document.getElementById("consent-essential").addEventListener("click", function () {
+        setConsent("essential");
+        banner.hidden = true;
+      });
+      document.getElementById("consent-reject").addEventListener("click", function () {
+        setConsent("essential");
+        banner.hidden = true;
+      });
+      document.getElementById("consent-accept").addEventListener("click", function () {
+        setConsent("analytics");
+        banner.hidden = true;
+        visitorPing("consent_analytics");
+      });
+      if (hasAnalytics()) visitorPing("pageview");
+
+      (function checkStatus() {
+        var bases = apiBases();
+        var i = 0;
+        function next() {
+          if (i >= bases.length) return;
+          fetch(bases[i] + "/api/curionilabs/access-status", { credentials: "include" })
+            .then(function (r) { return r.json(); })
+            .then(function (s) { if (s.admitted) goHub(s.hub || "/curionilabs/"); })
+            .catch(function () { i += 1; next(); });
+        }
+        next();
+      })();
+
+      document.getElementById("form-email").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var fd = new FormData(e.target);
+        if (fd.get("website")) return;
+        var ids = trackingIds();
+        var btn = e.target.querySelector("button[type=submit]");
+        if (btn) { btn.disabled = true; btn.textContent = "Verifying…"; }
+        postJson("/api/curionilabs/email-access", {
+          name: String(fd.get("name") || "").trim(),
+          email: String(fd.get("email") || "").trim(),
+          consent: getConsent() || "v1|essential",
+          visitorId: ids.visitorId,
+          sessionId: ids.sessionId,
+          referrer: document.referrer || ""
+        })
+          .then(function (x) {
+            if (x.ok) {
+              showMsg(x.b.message || "Welcome. Opening Curioni Labs…", true);
+              setTimeout(function () { goHub(x.b.hub); }, 700);
+            } else showMsg(x.b.error || "Access denied.", false);
+          })
+          .catch(function (err) {
+            var msg = (err && err.detail)
+              || (err && err.message === "api_error" ? "Check your name and email, then try again." : null)
+              || "Could not reach the desk server. The site must call admin.curionilabs.com — deploy the latest CRM build.";
+            showMsg(msg, false);
+          })
+          .finally(function () {
+            if (btn) { btn.disabled = false; btn.textContent = "Enter Curioni Labs"; }
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
