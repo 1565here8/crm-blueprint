@@ -1,0 +1,13 @@
+export const TRADING_SITE_NAME = "__SITE_NAME__";
+export const TRADING_SITE_DOMAIN = "__DOMAIN__";
+export const TRADING_SITE_TAGLINE = "AI-powered trading intelligence platform";
+
+export const tradingRoutes = {
+  home: "/",
+  dashboard: "/dashboard",
+  trading: "/trading",
+  signals: "/signals",
+  portfolio: "/portfolio",
+  analytics: "/analytics",
+  admin: "/admin",
+} as const;
