@@ -17,6 +17,8 @@ BRAND_NAME="TradeToros"
 BRAND_DISPLAY="TRADETOROS"
 SUPPORT_EMAIL="support@tradetoros.com"
 TAGLINE="Professional trading platform"
+PRIMARY_COLOR="#0ea5e9"
+ACCENT_COLOR="#f59e0b"
 
 # VPS settings
 VPS_IP="216.158.237.213"
@@ -24,17 +26,13 @@ VPS_USER="root"
 CRM_DIR="/opt/curio-crm"
 PM2_NAME="tradetoros-crm"
 
-# Cloudflare settings (set to "none" if using Namecheap + your own SSL)
-CLOUDFLARE_ZONE=""  # e.g., "tradetoros.com" or "none"
-CLOUDFLARE_TOKEN=""  # API token if needed
-
 # ────────────────────────────────────────────────────────────
 # 🚀  DEPLOY — No need to change anything below
 # ────────────────────────────────────────────────────────────
 
 echo "╔══════════════════════════════════════════════════════════╗"
 echo "║         CRM Domain Adapter — Plug & Play Deploy          ║"
-echo "║         $BRAND_NAME on $PUBLIC_DOMAIN                        ║"
+echo "║         $BRAND_NAME on $PUBLIC_DOMAIN                    ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -70,6 +68,15 @@ PUBLIC_SITE_URL=https://$PUBLIC_DOMAIN
 ADMIN_URL=https://$ADMIN_SUBDOMAIN
 CORS_ORIGINS=https://$PUBLIC_DOMAIN,https://www.$PUBLIC_DOMAIN,https://$ADMIN_SUBDOMAIN
 
+# ── Broker brand (change for each broker) ──────────────────
+BROKER_NAME=$BRAND_NAME
+BROKER_DISPLAY=$BRAND_DISPLAY
+BROKER_DOMAIN=$PUBLIC_DOMAIN
+BROKER_SUPPORT_EMAIL=$SUPPORT_EMAIL
+BROKER_TAGLINE=$TAGLINE
+BROKER_PRIMARY_COLOR=$PRIMARY_COLOR
+BROKER_ACCENT_COLOR=$ACCENT_COLOR
+
 SEARCH_INDEXING_ENABLED=0
 
 # ── Ollama (if running locally) ────────────────────────────
@@ -79,28 +86,6 @@ OLLAMA_DESK_SMART_MODEL=qwen2.5:3b
 ENVEOF
 
 echo "  ✅ .env written"
-
-# ── Update PM2 ecosystem if it exists ──
-if [ -f $CRM_DIR/ecosystem.config.cjs ]; then
-  echo "  ✅ ecosystem.config.cjs found — will reload on restart"
-else
-  cat > $CRM_DIR/ecosystem.config.cjs << 'PMEOF'
-module.exports = {
-  apps: [{
-    name: 'crm-platform',
-    script: 'server/index.ts',
-    cwd: '/opt/curio-crm',
-    exec_mode: 'cluster',
-    instances: 'max',
-    max_memory_restart: '1G',
-    error_file: '/var/log/crm-error.log',
-    out_file: '/var/log/crm-out.log',
-    log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
-  }],
-};
-PMEOF
-  echo "  ✅ ecosystem.config.cjs created"
-fi
 
 # ── Install & build if needed ──
 if [ ! -d $CRM_DIR/node_modules ]; then
@@ -121,7 +106,7 @@ echo "  Health:      http://$VPS_IP:3002/api/health"
 echo ""
 echo "  Next steps:"
 echo "    1. Fix Cloudflare SSL (SSL/TLS → Full)"
-echo "    2. Update DNS if using Namecheap"
+echo "    2. Update DNS"
 echo "    3. Login at https://$ADMIN_SUBDOMAIN/admin"
 echo "══════════════════════════════════════════════════════════"
 

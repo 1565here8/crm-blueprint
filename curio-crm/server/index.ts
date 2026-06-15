@@ -52,9 +52,6 @@ import {
   isCurionilabsIsolation,
   isMobileTraderHost,
   publicSiteBaseUrl,
-  isTradetorosHost,
-  TRADOTOROS_CRM_ADMIN_URL,
-  TRADOTOROS_PUBLIC_URL,
 } from "../shared/productHosts";
 import { requestHostname } from "./requestHost";
 import { demoNarrationHandler, demoNarrationLimiter, demoVoicesHandler } from "./demoNarration";

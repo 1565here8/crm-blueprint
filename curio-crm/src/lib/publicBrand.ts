@@ -1,4 +1,4 @@
-import { isCurionilabsHost, isTradetorosHost } from "../../shared/productHosts";
+import { isCurionilabsHost, isBrokerPublicHost } from "../../shared/productHosts";
 
 export type PublicBrand = {
   name: string;
@@ -14,20 +14,35 @@ const CURIONILABS: PublicBrand = {
   tagline: "Multi-asset broker platform & operator CRM",
 };
 
-const TRADOTOROS: PublicBrand = {
-  name: "TradeToros",
-  domain: "tradetoros.com",
-  supportEmail: "support@tradetoros.com",
-  tagline: "Professional trading platform",
-};
+/** Broker brand is read from env — set BROKER_NAME, BROKER_SUPPORT_EMAIL, BROKER_TAGLINE */
+function envBrand(): PublicBrand | null {
+  const name = typeof process !== "undefined"
+    ? process.env.BROKER_NAME?.trim()
+    : (typeof window !== "undefined"
+      ? (window as any).__ENV?.BROKER_NAME
+      : null);
+  if (!name) return null;
 
-/** Curioni / demo hosts — visible ribbon. */
+  return {
+    name,
+    domain: typeof process !== "undefined"
+      ? (process.env.BROKER_DOMAIN?.trim() ?? "")
+      : "",
+    supportEmail: typeof process !== "undefined"
+      ? (process.env.BROKER_SUPPORT_EMAIL?.trim() ?? "")
+      : "",
+    tagline: typeof process !== "undefined"
+      ? (process.env.BROKER_TAGLINE?.trim() ?? "")
+      : "",
+  };
+}
+
 export function isPublicDemoSkin(hostname = typeof window !== "undefined" ? window.location.hostname : ""): boolean {
   return isCurionilabsHost(hostname);
 }
 
 export function getPublicBrand(hostname = typeof window !== "undefined" ? window.location.hostname : ""): PublicBrand {
-  if (isTradetorosHost(hostname)) return TRADOTOROS;
+  if (isBrokerPublicHost(hostname)) return envBrand() ?? CURIONILABS;
   if (isCurionilabsHost(hostname)) return CURIONILABS;
   return CURIONILABS;
 }

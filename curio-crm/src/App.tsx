@@ -15,7 +15,7 @@ import { ChatBubble } from "./components/site/ChatBubble";
 import { AdminLoginPage } from "./pages/admin/AdminLoginPage";
 import { getPublicBrand } from "./lib/publicBrand";
 import { isCrmAdminShellHost } from "./lib/crmAdminShell";
-import { isTradetorosHost } from "../shared/productHosts";
+import { isBrokerPublicHost } from "../shared/productHosts";
 import { TradeTorosLandingPage } from "./pages/TradeTorosLandingPage";
 import { getAdminUrl, getPublicSiteUrl, isAdminHost } from "./lib/siteMode";
 import { CURIONILABS_CRM_ADMIN_URL, isRetiredVendorHost } from "../shared/productHosts";
@@ -29,16 +29,16 @@ function RedirectToAdminPortal() {
       return;
     }
     const target = `${getAdminUrl(host)}/admin`;
-    if (isRetiredVendorHost(host)) {
+    if (isRetiredVendorHost(host) && /xtoropro\.com|etoropros\.com/i.test(target)) {
       window.location.replace(`${CURIONILABS_CRM_ADMIN_URL}/admin`);
       return;
     }
     window.location.replace(target);
   }, []);
-  return <LoadingScreen message="Opening operator CRM…" />;
+  return <LoadingScreen message="Opening operator CRM\u2026" />;
 }
 
-function LoadingScreen({ message = "Loading…" }: { message?: string }) {
+function LoadingScreen({ message = "Loading\u2026" }: { message?: string }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#0c1017] text-slate-400">
       {message}
@@ -114,7 +114,7 @@ function PublicAppRoutes() {
 
   if (loading || offlineLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white text-slate-500">Loading…</div>
+      <div className="flex min-h-screen items-center justify-center bg-white text-slate-500">Loading\u2026</div>
     );
   }
 
@@ -161,6 +161,7 @@ function PublicAppRoutes() {
 }
 
 function AppRoutes() {
+  const { user, loading } = useAuth();
   const onAdminHost = isCrmAdminShellHost() || isAdminHost();
 
   useEffect(() => {
@@ -171,8 +172,9 @@ function AppRoutes() {
     }
   }, [onAdminHost]);
 
-  // TradeToros: show branded landing on public domain
-  if (isTradetorosHost(window.location.hostname) && !user) {
+  if (loading) return <LoadingScreen />;
+
+  if (!onAdminHost && isBrokerPublicHost(window.location.hostname) && !user) {
     return <TradeTorosLandingPage />;
   }
 
